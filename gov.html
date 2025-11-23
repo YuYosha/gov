@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLASSIFIED - TOP SECRET</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Audio Elements -->
+    <audio id="glitchSound" preload="auto">
+        <source src="sound/glitch.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="typingSound" preload="auto">
+        <source src="sound/type.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="backgroundMusic" loop preload="auto">
+        <source src="music/wait.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Hacking Loading Screen -->
+    <div id="hackingScreen" class="hacking-screen">
+        <div class="hack-overlay"></div>
+        <div class="hack-container">
+            <div class="hack-header">
+                <div class="hack-title">INITIATING BREACH...</div>
+                <div class="hack-status">● ACTIVE</div>
+            </div>
+            <div class="hack-terminal" id="hackTerminal">
+                <!-- Terminal lines will be added dynamically -->
+            </div>
+            <div class="hack-stats-grid">
+                <div class="hack-stat-item">
+                    <div class="hack-stat-label">TARGET</div>
+                    <div class="hack-stat-value" id="hackTarget">acc.secure.net</div>
+                </div>
+                <div class="hack-stat-item">
+                    <div class="hack-stat-label">ATTACK VECTORS</div>
+                    <div class="hack-stat-value" id="hackVectors">3</div>
+                </div>
+                <div class="hack-stat-item">
+                    <div class="hack-stat-label">CVEs FOUND</div>
+                    <div class="hack-stat-value" id="hackCVEs">0</div>
+                </div>
+                <div class="hack-stat-item">
+                    <div class="hack-stat-label">STATUS</div>
+                    <div class="hack-stat-value" id="hackStatus">SCANNING</div>
+                </div>
+            </div>
+            <div class="hack-progress-section">
+                <div class="hack-progress-label" id="hackProgressLabel">Scanning network...</div>
+                <div class="hack-progress-bar">
+                    <div class="hack-progress-fill" id="hackProgressFill"></div>
+                </div>
+                <div class="hack-progress-text" id="hackProgressText">0%</div>
+            </div>
+            <div class="hack-warning">
+                <div class="hack-warning-icon">⚠</div>
+                <div class="hack-warning-text">UNAUTHORIZED ACCESS DETECTED</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Left Side Panel -->
+    <div class="side-panel left-panel">
+        <div class="panel-header">
+            <div class="panel-title">DATA STREAM</div>
+            <div class="panel-status">● ACTIVE</div>
+        </div>
+        <div class="data-stream" id="leftDataStream">
+            <div class="stream-line">[SYSTEM] Monitoring active...</div>
+            <div class="stream-line">[SECURITY] All protocols operational</div>
+            <div class="stream-line">[NETWORK] Connection stable</div>
+            <div class="stream-line">[AUDIT] Access logs updated</div>
+            <div class="stream-line">[SYSTEM] Monitoring active...</div>
+            <div class="stream-line">[SECURITY] All protocols operational</div>
+            <div class="stream-line">[NETWORK] Connection stable</div>
+            <div class="stream-line">[AUDIT] Access logs updated</div>
+        </div>
+        <div class="panel-footer">
+            <div class="panel-indicator">▼ SCROLLING</div>
+        </div>
+    </div>
+
+    <!-- Right Side Panel -->
+    <div class="side-panel right-panel">
+        <div class="panel-header">
+            <div class="panel-title">SYSTEM STATUS</div>
+            <div class="panel-status">● ONLINE</div>
+        </div>
+        <div class="status-panel">
+            <div class="status-indicator">
+                <div class="indicator-label">SECURITY</div>
+                <div class="indicator-bar">
+                    <div class="indicator-fill security-fill"></div>
+                </div>
+                <div class="indicator-value">98%</div>
+            </div>
+            <div class="status-indicator">
+                <div class="indicator-label">NETWORK</div>
+                <div class="indicator-bar">
+                    <div class="indicator-fill network-fill"></div>
+                </div>
+                <div class="indicator-value">100%</div>
+            </div>
+            <div class="status-indicator">
+                <div class="indicator-label">PROCESSING</div>
+                <div class="indicator-bar">
+                    <div class="indicator-fill processing-fill"></div>
+                </div>
+                <div class="indicator-value">87%</div>
+            </div>
+            <div class="status-indicator">
+                <div class="indicator-label">STORAGE</div>
+                <div class="indicator-bar">
+                    <div class="indicator-fill storage-fill"></div>
+                </div>
+                <div class="indicator-value">73%</div>
+            </div>
+        </div>
+        <div class="monitoring-section">
+            <div class="monitor-item">
+                <span class="monitor-label">ACTIVE USERS:</span>
+                <span class="monitor-value" id="activeUsers">[REDACTED]</span>
+            </div>
+            <div class="monitor-item">
+                <span class="monitor-label">THREAT LEVEL:</span>
+                <span class="monitor-value threat-low">LOW</span>
+            </div>
+            <div class="monitor-item">
+                <span class="monitor-label">LAST UPDATE:</span>
+                <span class="monitor-value" id="lastUpdate">--:--:--</span>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <div class="panel-indicator">● MONITORING</div>
+        </div>
+    </div>
+
+    <div class="security-banner top-banner">
+        <div class="banner-content">
+            <span class="classification">TOP SECRET</span>
+            <span class="separator">//</span>
+            <span class="codeword">EYES ONLY</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo-section">
+                <div class="seal">
+                    <div class="seal-inner">
+                        <div class="seal-star">★</div>
+                    </div>
+                </div>
+                <h1 class="agency-name">DEPARTMENT OF CLASSIFIED OPERATIONS</h1>
+            </div>
+            <div class="clearance-badge">
+                <div class="badge-header">SECURITY CLEARANCE</div>
+                <div class="badge-level">LEVEL 5</div>
+                <div class="badge-id">ID: [REDACTED]</div>
+            </div>
+        </div>
+
+        <div class="document-body">
+            <div class="document-header">
+                <div class="doc-number">DOCUMENT ID: [REDACTED]</div>
+                <div class="doc-date">DATE: [CLASSIFIED]</div>
+            </div>
+
+            <div class="warning-box">
+                <div class="warning-icon">⚠</div>
+                <div class="warning-text">
+                    <strong>WARNING:</strong> This document contains classified information. 
+                    Unauthorized access is prohibited and punishable by law.
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">OPERATION STATUS</h2>
+                <div class="status-grid">
+                    <div class="status-item">
+                        <div class="status-label">CLEARANCE LEVEL</div>
+                        <div class="status-value">[REDACTED]</div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-label">ACTIVE OPERATIONS</div>
+                        <div class="status-value">[CLASSIFIED]</div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-label">PERSONNEL COUNT</div>
+                        <div class="status-value">[REDACTED]</div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-label">LAST UPDATE</div>
+                        <div class="status-value">[CLASSIFIED]</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">CLASSIFIED INFORMATION</h2>
+                <div class="redacted-text">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                    <span class="redacted">[REDACTED]</span> Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris. 
+                    <span class="redacted">[REDACTED]</span> Duis aute irure dolor in reprehenderit.</p>
+                    <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                </div>
+            </div>
+
+            <div class="terminal-section">
+                <div class="terminal-header">
+                    <span class="terminal-title">SECURE TERMINAL</span>
+                    <span class="terminal-status">● CONNECTED</span>
+                </div>
+                <div class="terminal-body">
+                    <div class="terminal-line">
+                        <span class="prompt">root@classified:~$</span>
+                        <span class="command">access_granted</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="output">[SYSTEM] Security clearance verified.</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="output">[SYSTEM] Welcome, Agent [REDACTED].</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="prompt">root@classified:~$</span>
+                        <span class="cursor">_</span>
+                    </div>
+                </div>
+            </div>
+
+                    <div class="content-section">
+                        <h2 class="section-title">SECURE FILE ACCESS</h2>
+                        <div class="passcode-section">
+                            <div class="passcode-label">ENTER CLASSIFIED PASSCODE:</div>
+                            <div class="passcode-input-group">
+                                <input type="password" id="passcodeInput" class="passcode-input" placeholder="[CLASSIFIED]" autocomplete="off">
+                                <button id="accessButton" class="access-button">ACCESS FILES</button>
+                            </div>
+                            <div id="passcodeError" class="passcode-error"></div>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h2 class="section-title">CITY SURVEILLANCE</h2>
+                        <div class="city-access-section">
+                            <button id="cityViewButton" class="access-button">VIEW CITY MAP</button>
+                        </div>
+                    </div>
+
+            <div id="secretFilesSection" class="secret-files-section hidden">
+                <div class="files-header">
+                    <h2 class="section-title">CLASSIFIED FILES ARCHIVE</h2>
+                    <div class="files-count">FILES: <span id="fileCount">0</span></div>
+                </div>
+                <div class="files-grid" id="filesGrid">
+                    <div class="file-item" data-file="002">
+                        <div class="file-icon">📄</div>
+                        <div class="file-name">FILE_002_CORP_MEMO_RESOURCE_REALLOC.txt</div>
+                        <div class="file-meta">DATE: 15.08.2274 | CLEARANCE: LEVEL 4</div>
+                        <div class="file-status">CLASSIFIED</div>
+                    </div>
+                    <div class="file-item" data-file="003">
+                        <div class="file-icon">📄</div>
+                        <div class="file-name">FILE_003_ARCH_PLAN_SENTRY_REVISION.txt</div>
+                        <div class="file-meta">DATE: 09.11.2273 | CLEARANCE: LEVEL 4</div>
+                        <div class="file-status">CLASSIFIED</div>
+                    </div>
+                    <div class="file-item" data-file="004">
+                        <div class="file-icon">📄</div>
+                        <div class="file-name">FILE_004_PSYCH_ASSESS_JADE_PROJECT01.txt</div>
+                        <div class="file-meta">DATE: 21.03.2275 | CLEARANCE: LEVEL 5</div>
+                        <div class="file-status">CLASSIFIED</div>
+                    </div>
+                    <div class="file-item" data-file="005">
+                        <div class="file-icon">📄</div>
+                        <div class="file-name">FILE_005_SEC_INCIDENT_SECTOR_B9.txt</div>
+                        <div class="file-meta">DATE: 03.07.2274 | CLEARANCE: LEVEL 5</div>
+                        <div class="file-status">CLASSIFIED</div>
+                    </div>
+                    <div class="file-item" data-file="006">
+                        <div class="file-icon">📄</div>
+                        <div class="file-name">FILE_006_INTERNAL_AUDIT_EXEC_SALARIES.txt</div>
+                        <div class="file-meta">DATE: [CLASSIFIED] | CLEARANCE: LEVEL 5</div>
+                        <div class="file-status">CLASSIFIED</div>
+                    </div>
+                    <div class="file-item" data-file="007">
+                        <div class="file-icon">📄</div>
+                        <div class="file-name">FILE_007_BIOHAZARD_ERD_LAB_BREACH.txt</div>
+                        <div class="file-meta">DATE: 05.06.2275 | CLEARANCE: LEVEL 5</div>
+                        <div class="file-status">CLASSIFIED</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- File Viewer Modal -->
+            <div id="fileViewer" class="file-viewer hidden">
+                <div class="viewer-overlay"></div>
+                <div class="viewer-content">
+                    <div class="viewer-header">
+                        <div class="viewer-title">
+                            <span class="viewer-icon">📄</span>
+                            <span id="viewerFileName">FILE_[CLASSIFIED].txt</span>
+                        </div>
+                        <button class="viewer-close" id="closeViewer">✕</button>
+                    </div>
+                    <div class="viewer-body" id="viewerBody">
+                        <!-- File content will be inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="security-banner bottom-banner">
+        <div class="banner-content">
+            <span class="classification">TOP SECRET</span>
+            <span class="separator">//</span>
+            <span class="codeword">EYES ONLY</span>
+        </div>
+    </div>
+
+    <!-- Security Alert Container -->
+    <div id="securityAlertsContainer"></div>
+
+    <!-- 3D City View Screen -->
+    <div id="cityViewScreen" class="city-view-screen hidden">
+        <div class="city-view-header">
+            <div class="city-view-title">CITY SURVEILLANCE MAP</div>
+            <button id="cityViewClose" class="city-view-close">✖ CLOSE</button>
+        </div>
+        <div id="cityViewContainer" class="city-view-container">
+            <canvas id="cityCanvas"></canvas>
+        </div>
+        <div class="city-view-footer">
+            <span class="city-view-info">3D RENDERING ACTIVE</span>
+            <span class="city-view-info">ROTATE: MOUSE DRAG | ZOOM: SCROLL</span>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="gov.js"></script>
+</body>
+</html>
+
