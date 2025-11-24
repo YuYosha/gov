@@ -17,6 +17,9 @@
     <audio id="backgroundMusic" loop preload="auto">
         <source src="music/wait.mp3" type="audio/mpeg">
     </audio>
+    <audio id="alarmSound" loop preload="auto">
+        <source src="sound/alarm.mp3" type="audio/mpeg">
+    </audio>
 
     <!-- Hacking Loading Screen -->
     <div id="hackingScreen" class="hacking-screen">
@@ -244,6 +247,92 @@
                         </div>
                     </div>
 
+            <div id="secretFilesSection" class="secret-files-section hidden">
+                <div class="files-header">
+                    <h2 class="section-title">CLASSIFIED FILES ARCHIVE</h2>
+                    <div class="files-count">FILES: <span id="fileCount">0</span></div>
+                </div>
+                <div class="files-grid" id="filesGrid">
+                    <div class="file-item" data-file="001">
+                        <div class="file-icon">📄</div>
+                        <div class="file-name">FILE_001_CORP_MEMO_RESOURCE_REALLOC.txt</div>
+                        <div class="file-meta">DATE: 15.08.2274 | CLEARANCE: LEVEL 4</div>
+                        <div class="file-status">CLASSIFIED</div>
+                    </div>
+                    <div class="file-item" data-file="002">
+                        <div class="file-icon">📄</div>
+                        <div class="file-name">FILE_002_ARCH_PLAN_SENTRY_REVISION.txt</div>
+                        <div class="file-meta">DATE: 09.11.2273 | CLEARANCE: LEVEL 4</div>
+                        <div class="file-status">CLASSIFIED</div>
+                    </div>
+                    <div class="file-item" data-file="003">
+                        <div class="file-icon">📄</div>
+                        <div class="file-name">FILE_003_PSYCH_ASSESS_JADE_PROJECT01.txt</div>
+                        <div class="file-meta">DATE: 21.03.2275 | CLEARANCE: LEVEL 5</div>
+                        <div class="file-status">CLASSIFIED</div>
+                    </div>
+                    <div class="file-item" data-file="004">
+                        <div class="file-icon">📄</div>
+                        <div class="file-name">FILE_004_SEC_INCIDENT_SECTOR_B9.txt</div>
+                        <div class="file-meta">DATE: 03.07.2274 | CLEARANCE: LEVEL 5</div>
+                        <div class="file-status">CLASSIFIED</div>
+                    </div>
+                    <div class="file-item" data-file="005">
+                        <div class="file-icon">📄</div>
+                        <div class="file-name">FILE_005_INTERNAL_AUDIT_EXEC_SALARIES.txt</div>
+                        <div class="file-meta">DATE: [CLASSIFIED] | CLEARANCE: LEVEL 5</div>
+                        <div class="file-status">CLASSIFIED</div>
+                    </div>
+                    <div class="file-item" data-file="006">
+                        <div class="file-icon">📄</div>
+                        <div class="file-name">FILE_006_BIOHAZARD_ERD_LAB_BREACH.txt</div>
+                        <div class="file-meta">DATE: 05.06.2275 | CLEARANCE: LEVEL 5</div>
+                        <div class="file-status">CLASSIFIED</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Archive Access Point (Appears after files are unlocked) -->
+            <div class="content-section" id="archiveAccessSection" style="display: none; margin-top: 30px; border: 3px solid #00ff00; background: rgba(0, 255, 0, 0.05); padding: 25px;">
+                <h2 class="section-title" style="color: #00ff00; text-shadow: 0 0 10px #00ff00;">🔒 RESTRICTED ARCHIVE ACCESS</h2>
+                <div style="color: #00ff00; font-size: 12px; margin-bottom: 15px; opacity: 0.8; font-family: 'Courier Prime', monospace;">
+                    [SYSTEM] Archive access requires reference code from classified personnel records.
+                </div>
+                <div class="passcode-section">
+                    <div class="passcode-label" style="color: #00ff00;">ENTER ARCHIVE REFERENCE CODE:</div>
+                    <div class="passcode-input-group">
+                        <input type="text" id="archiveCodeInput" class="passcode-input" placeholder="Enter archive reference code" autocomplete="off" style="border-color: #00ff00; color: #00ff00;">
+                        <button id="archiveAccessButton" class="access-button" style="border-color: #00ff00; color: #00ff00;">ACCESS ARCHIVE</button>
+                    </div>
+                    <div id="archiveError" class="passcode-error"></div>
+                    <div style="color: #888; font-size: 11px; margin-top: 10px; font-style: italic; font-family: 'Courier Prime', monospace;">
+                        Hint: Check personnel database for archive references...
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Archive Files Section (Appears after code is entered) -->
+            <div id="archiveFilesSection" class="secret-files-section hidden" style="margin-top: 30px; border: 3px solid #00ff00; background: rgba(0, 255, 0, 0.03);">
+                <div class="files-header" style="border-bottom-color: #00ff00;">
+                    <h2 class="section-title" style="color: #00ff00;">RESTRICTED ARCHIVE FILES</h2>
+                    <div class="files-count" style="color: #00ff00;">FILES: <span id="archiveFileCount">0</span></div>
+                </div>
+                <div class="files-grid" id="archiveFilesGrid">
+                    <div class="file-item hidden" id="file007" data-file="007">
+                        <div class="file-icon">📄</div>
+                        <div class="file-name">FILE_007_ARCHIVE_RESTRICTED.txt</div>
+                        <div class="file-meta">DATE: [CLASSIFIED] | CLEARANCE: LEVEL 6</div>
+                        <div class="file-status">RESTRICTED</div>
+                    </div>
+                    <div class="file-item hidden" id="file008" data-file="008">
+                        <div class="file-icon">📄</div>
+                        <div class="file-name">FILE_008_EMERGENCY_COMM_LOG.txt</div>
+                        <div class="file-meta">DATE: [CLASSIFIED] | CLEARANCE: LEVEL 7</div>
+                        <div class="file-status">CRITICAL</div>
+                    </div>
+                </div>
+            </div>
+
                     <div class="content-section">
                         <h2 class="section-title">CITY SURVEILLANCE</h2>
                         <div class="city-access-section">
@@ -251,67 +340,256 @@
                         </div>
                     </div>
 
-            <div id="secretFilesSection" class="secret-files-section hidden">
-                <div class="files-header">
-                    <h2 class="section-title">CLASSIFIED FILES ARCHIVE</h2>
-                    <div class="files-count">FILES: <span id="fileCount">0</span></div>
-                </div>
-                <div class="files-grid" id="filesGrid">
-                    <div class="file-item" data-file="002">
-                        <div class="file-icon">📄</div>
-                        <div class="file-name">FILE_002_CORP_MEMO_RESOURCE_REALLOC.txt</div>
-                        <div class="file-meta">DATE: 15.08.2274 | CLEARANCE: LEVEL 4</div>
-                        <div class="file-status">CLASSIFIED</div>
-                    </div>
-                    <div class="file-item" data-file="003">
-                        <div class="file-icon">📄</div>
-                        <div class="file-name">FILE_003_ARCH_PLAN_SENTRY_REVISION.txt</div>
-                        <div class="file-meta">DATE: 09.11.2273 | CLEARANCE: LEVEL 4</div>
-                        <div class="file-status">CLASSIFIED</div>
-                    </div>
-                    <div class="file-item" data-file="004">
-                        <div class="file-icon">📄</div>
-                        <div class="file-name">FILE_004_PSYCH_ASSESS_JADE_PROJECT01.txt</div>
-                        <div class="file-meta">DATE: 21.03.2275 | CLEARANCE: LEVEL 5</div>
-                        <div class="file-status">CLASSIFIED</div>
-                    </div>
-                    <div class="file-item" data-file="005">
-                        <div class="file-icon">📄</div>
-                        <div class="file-name">FILE_005_SEC_INCIDENT_SECTOR_B9.txt</div>
-                        <div class="file-meta">DATE: 03.07.2274 | CLEARANCE: LEVEL 5</div>
-                        <div class="file-status">CLASSIFIED</div>
-                    </div>
-                    <div class="file-item" data-file="006">
-                        <div class="file-icon">📄</div>
-                        <div class="file-name">FILE_006_INTERNAL_AUDIT_EXEC_SALARIES.txt</div>
-                        <div class="file-meta">DATE: [CLASSIFIED] | CLEARANCE: LEVEL 5</div>
-                        <div class="file-status">CLASSIFIED</div>
-                    </div>
-                    <div class="file-item" data-file="007">
-                        <div class="file-icon">📄</div>
-                        <div class="file-name">FILE_007_BIOHAZARD_ERD_LAB_BREACH.txt</div>
-                        <div class="file-meta">DATE: 05.06.2275 | CLEARANCE: LEVEL 5</div>
-                        <div class="file-status">CLASSIFIED</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- File Viewer Modal -->
-            <div id="fileViewer" class="file-viewer hidden">
-                <div class="viewer-overlay"></div>
-                <div class="viewer-content">
-                    <div class="viewer-header">
-                        <div class="viewer-title">
-                            <span class="viewer-icon">📄</span>
-                            <span id="viewerFileName">FILE_[CLASSIFIED].txt</span>
+                    <!-- Personnel Database -->
+                    <div class="content-section">
+                        <h2 class="section-title">PERSONNEL DATABASE</h2>
+                        <div class="personnel-section">
+                            <div class="search-bar">
+                                <input type="text" id="personnelSearch" class="search-input" placeholder="SEARCH BY ID, NAME, OR CLEARANCE LEVEL..." autocomplete="off">
+                                <button id="searchPersonnel" class="access-button">SEARCH</button>
+                            </div>
+                            <div id="personnelResults" class="personnel-results hidden">
+                                <div class="personnel-item">
+                                    <div class="personnel-id">ID: [REDACTED]</div>
+                                    <div class="personnel-name">NAME: [CLASSIFIED]</div>
+                                    <div class="personnel-clearance">CLEARANCE: LEVEL [REDACTED]</div>
+                                    <div class="personnel-status">STATUS: [ACTIVE/TERMINATED]</div>
+                                </div>
+                            </div>
                         </div>
-                        <button class="viewer-close" id="closeViewer">✕</button>
                     </div>
-                    <div class="viewer-body" id="viewerBody">
-                        <!-- File content will be inserted here -->
+
+                    <!-- Threat Assessment Dashboard -->
+                    <div class="content-section">
+                        <h2 class="section-title">THREAT ASSESSMENT DASHBOARD</h2>
+                        <div class="threat-dashboard">
+                            <div class="threat-grid">
+                                <div class="threat-item critical">
+                                    <div class="threat-label">CRITICAL THREATS</div>
+                                    <div class="threat-count" id="criticalThreats">3</div>
+                                </div>
+                                <div class="threat-item high">
+                                    <div class="threat-label">HIGH PRIORITY</div>
+                                    <div class="threat-count" id="highThreats">12</div>
+                                </div>
+                                <div class="threat-item medium">
+                                    <div class="threat-label">MEDIUM RISK</div>
+                                    <div class="threat-count" id="mediumThreats">47</div>
+                                </div>
+                                <div class="threat-item low">
+                                    <div class="threat-label">MONITORING</div>
+                                    <div class="threat-count" id="lowThreats">128</div>
+                                </div>
+                            </div>
+                            <button id="viewThreatsButton" class="access-button">VIEW DETAILED THREAT LOG</button>
+                        </div>
                     </div>
+
+                    <!-- Communication Intercepts -->
+                    <div class="content-section">
+                        <h2 class="section-title">COMMUNICATION INTERCEPTS</h2>
+                        <div class="intercepts-section">
+                            <div class="intercepts-controls">
+                                <select id="interceptFilter" class="filter-select">
+                                    <option value="all">ALL INTERCEPTS</option>
+                                    <option value="tier3">TIER 3 RESIDENTIAL</option>
+                                    <option value="tier4">TIER 4 GUTTER ZONES</option>
+                                    <option value="resistance">RESISTANCE NETWORKS</option>
+                                </select>
+                                <button id="refreshIntercepts" class="access-button">REFRESH</button>
+                            </div>
+                            <div id="interceptsList" class="intercepts-list">
+                                <div class="intercept-item">
+                                    <div class="intercept-header">
+                                        <span class="intercept-time">[23:47:12]</span>
+                                        <span class="intercept-source">SOURCE: [REDACTED]</span>
+                                    </div>
+                                    <div class="intercept-content">[ENCRYPTED MESSAGE INTERCEPTED]</div>
+                                    <div class="intercept-status">STATUS: DECRYPTING...</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Biometric Scanner -->
+                    <div class="content-section">
+                        <h2 class="section-title">BIOMETRIC IDENTIFICATION SYSTEM</h2>
+                        <div class="biometric-section">
+                            <div class="biometric-scanner">
+                                <div class="scanner-display" id="scannerDisplay">
+                                    <div class="scanner-grid"></div>
+                                    <div class="scanner-status">READY FOR SCAN</div>
+                                </div>
+                                <button id="initiateScan" class="access-button">INITIATE BIOMETRIC SCAN</button>
+                            </div>
+                            <div id="scanResults" class="scan-results hidden">
+                                <div class="scan-result-item">
+                                    <div class="result-label">IDENTITY:</div>
+                                    <div class="result-value">[CLASSIFIED]</div>
+                                </div>
+                                <div class="scan-result-item">
+                                    <div class="result-label">CLEARANCE:</div>
+                                    <div class="result-value">LEVEL [REDACTED]</div>
+                                </div>
+                                <div class="scan-result-item">
+                                    <div class="result-label">STATUS:</div>
+                                    <div class="result-value">VERIFIED</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Protocol Execution System -->
+                    <div class="content-section">
+                        <h2 class="section-title">PROTOCOL EXECUTION SYSTEM</h2>
+                        <div class="protocol-section">
+                            <div class="protocol-list">
+                                <div class="protocol-item" data-protocol="BLANK_SLATE">
+                                    <div class="protocol-name">PROTOCOL BLANK SLATE</div>
+                                    <div class="protocol-desc">Memory wipe on civilian network feeds</div>
+                                    <button class="protocol-execute">EXECUTE</button>
+                                </div>
+                                <div class="protocol-item" data-protocol="GOLIATH">
+                                    <div class="protocol-name">PROTOCOL GOLIATH</div>
+                                    <div class="protocol-desc">Isolation and containment protocol</div>
+                                    <button class="protocol-execute">EXECUTE</button>
+                                </div>
+                                <div class="protocol-item" data-protocol="LOCKDOWN">
+                                    <div class="protocol-name">PROTOCOL LOCKDOWN</div>
+                                    <div class="protocol-desc">Compliance enforcement protocol</div>
+                                    <button class="protocol-execute">EXECUTE</button>
+                                </div>
+                                <div class="protocol-item" data-protocol="SENTRY">
+                                    <div class="protocol-name">PROTOCOL SENTRY</div>
+                                    <div class="protocol-desc">Perimeter security activation</div>
+                                    <button class="protocol-execute">EXECUTE</button>
+                                </div>
+                            </div>
+                            <div id="protocolStatus" class="protocol-status hidden"></div>
+                        </div>
+                    </div>
+
+                    <!-- Network Activity Monitor -->
+                    <div class="content-section">
+                        <h2 class="section-title">NETWORK ACTIVITY MONITOR</h2>
+                        <div class="network-monitor-section">
+                            <div class="network-stats">
+                                <div class="network-stat">
+                                    <span class="stat-label">ACTIVE CONNECTIONS:</span>
+                                    <span class="stat-value" id="activeConnections">1,247</span>
+                                </div>
+                                <div class="network-stat">
+                                    <span class="stat-label">DATA TRANSFER:</span>
+                                    <span class="stat-value" id="dataTransfer">847.3 TB/s</span>
+                                </div>
+                                <div class="network-stat">
+                                    <span class="stat-label">PACKETS INTERCEPTED:</span>
+                                    <span class="stat-value" id="packetsIntercepted">12,847,392</span>
+                                </div>
+                            </div>
+                            <div class="network-activity" id="networkActivity">
+                                <div class="activity-item">
+                                    <span class="activity-time">[23:47:15]</span>
+                                    <span class="activity-detail">Unauthorized access attempt from Sector 7-B</span>
+                                    <span class="activity-status blocked">BLOCKED</span>
+                                </div>
+                            </div>
+                            <button id="clearNetworkLog" class="access-button">CLEAR LOG</button>
+                        </div>
+                    </div>
+
+                    <!-- Surveillance Feed Viewer -->
+                    <div class="content-section">
+                        <h2 class="section-title">SURVEILLANCE FEED ACCESS</h2>
+                        <div class="surveillance-section">
+                            <div class="feed-selector">
+                                <select id="feedSelector" class="filter-select">
+                                    <option value="sector-a1">SECTOR A-1: Executive Domes</option>
+                                    <option value="sector-b9">SECTOR B-9: Central Archives</option>
+                                    <option value="tier3">TIER 3: Lower Spires</option>
+                                    <option value="tier4">TIER 4: Gutter Zones</option>
+                                    <option value="erd-lab">ERD Research Complex</option>
+                                    <option value="perimeter">Perimeter Wall - Northern Arc</option>
+                                </select>
+                                <button id="loadFeed" class="access-button">LOAD FEED</button>
+                            </div>
+                            <div id="surveillanceFeed" class="surveillance-feed hidden">
+                                <div class="feed-display">
+                                    <div class="feed-overlay">
+                                        <div class="feed-info">FEED: [SELECTED SECTOR]</div>
+                                        <div class="feed-status">● LIVE</div>
+                                    </div>
+                                    <div class="feed-error-message">ERROR: FEED CONNECTION LOST</div>
+                                    <div class="feed-static"></div>
+                                </div>
+                                <div class="feed-controls">
+                                    <button id="recordFeed" class="access-button">RECORD</button>
+                                    <button id="pauseFeed" class="access-button">PAUSE</button>
+                                    <button id="closeFeed" class="access-button">CLOSE FEED</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+        </div>
+    </div>
+    
+    <!-- File Access Code Modal -->
+    <div id="fileAccessModal" class="file-access-modal hidden">
+        <div class="file-access-modal-content">
+            <div class="file-access-header">
+                <h2>ACCESS DENIED</h2>
+                <div class="file-access-subtitle">Level 7 Clearance Required</div>
+            </div>
+            <div class="file-access-body">
+                <div class="file-access-message">This file requires additional authorization.</div>
+                <div class="file-access-input-group">
+                    <label for="fileAccessCodeInput">Enter Access Code:</label>
+                    <input type="text" id="fileAccessCodeInput" class="file-access-input" placeholder="Enter code" autocomplete="off">
+                    <div id="fileAccessError" class="file-access-error"></div>
                 </div>
             </div>
+            <div class="file-access-buttons">
+                <button id="fileAccessSubmit" class="file-access-button">SUBMIT</button>
+                <button id="fileAccessCancel" class="file-access-button cancel">CANCEL</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- File Viewer - Content Replacement (No Popup) -->
+    <div id="fileViewerContainer" class="file-viewer-container hidden">
+        <div class="file-viewer-header-bar">
+            <button id="fileViewerBack" class="file-viewer-back-btn">← BACK</button>
+            <h2 id="viewerFileName" class="file-viewer-name">FILE_[CLASSIFIED].txt</h2>
+        </div>
+        <div id="viewerBody" class="file-viewer-content-body">
+            <!-- File content will be inserted here -->
+        </div>
+    </div>
+
+    <!-- Project 01 Restricted Access -->
+    <div class="content-section" id="project01AccessSection" style="margin-top: 50px; border: 3px solid #ff0000; background: rgba(255, 0, 0, 0.05); padding: 25px;">
+        <h2 class="section-title" style="color: #ff0000; text-shadow: 0 0 10px #ff0000;">🔒 PROJECT 01 RESTRICTED ACCESS</h2>
+        <div style="color: #ff0000; font-size: 12px; margin-bottom: 15px; opacity: 0.8; font-family: 'Courier Prime', monospace;">
+            [SYSTEM] Project 01 access requires Level 7+ clearance and special authorization code.
+        </div>
+        <div class="passcode-section">
+            <div class="passcode-label" style="color: #ff0000;">ENTER PROJECT 01 ACCESS CODE:</div>
+            <div class="passcode-input-group">
+                <input type="text" id="project01CodeInput" class="passcode-input" placeholder="Enter access code" autocomplete="off" style="border-color: #ff0000; color: #ff0000;">
+                <button id="project01AccessButton" class="access-button" style="border-color: #ff0000; color: #ff0000;">ACCESS PROJECT 01</button>
+            </div>
+            <div id="project01Error" class="passcode-error"></div>
+            <div style="color: #888; font-size: 11px; margin-top: 10px; font-style: italic; font-family: 'Courier Prime', monospace;">
+                Warning: Unauthorized access will result in immediate termination.
+            </div>
+        </div>
+    </div>
+
+    <!-- Project 01 Sequence Screen -->
+    <div id="project01Screen" class="project01-screen hidden">
+        <div id="project01BlackScreen" class="project01-black-screen hidden">
+            <div id="project01TextContainer" class="project01-text-container"></div>
         </div>
     </div>
 
@@ -329,15 +607,55 @@
     <!-- 3D City View Screen -->
     <div id="cityViewScreen" class="city-view-screen hidden">
         <div class="city-view-header">
-            <div class="city-view-title">CITY SURVEILLANCE MAP</div>
+            <div class="city-view-title">CITY SURVEILLANCE MAP <span class="scan-indicator">(SCAN)</span></div>
             <button id="cityViewClose" class="city-view-close">✖ CLOSE</button>
         </div>
         <div id="cityViewContainer" class="city-view-container">
             <canvas id="cityCanvas"></canvas>
+            <!-- ARG Puzzle Number Display -->
+            <div id="argNumberDisplay" class="arg-number-display hidden">
+                <div class="arg-number" id="argNumber1"></div>
+                <div class="arg-number" id="argNumber2"></div>
+                <div class="arg-number" id="argNumber3"></div>
+                <div class="arg-number" id="argNumber4"></div>
+                <div class="arg-number" id="argNumber5"></div>
+            </div>
+            <!-- District Info Side Menu -->
+            <div id="districtMenu" class="district-menu">
+                <div class="district-menu-header">
+                    <h3>DISTRICT INFORMATION</h3>
+                    <button id="districtMenuToggle" class="district-menu-toggle">◄</button>
+                </div>
+                <div class="district-menu-content">
+                    <div class="district-list" id="districtList">
+                        <!-- Districts will be populated by JavaScript -->
+                    </div>
+                    <div class="district-article hidden" id="districtArticle">
+                        <button class="district-back-btn" id="districtBackBtn">← BACK</button>
+                        <h2 class="district-article-title" id="districtArticleTitle"></h2>
+                        <div class="district-article-content" id="districtArticleContent"></div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="city-view-footer">
             <span class="city-view-info">3D RENDERING ACTIVE</span>
             <span class="city-view-info">ROTATE: MOUSE DRAG | ZOOM: SCROLL</span>
+        </div>
+    </div>
+
+    <!-- Protocol Alert Countdown Screen -->
+    <div id="protocolAlertScreen" class="protocol-alert-screen hidden">
+        <div class="alert-overlay"></div>
+        <div class="alert-content">
+            <div class="alert-header">
+                <div class="alert-icon">⚠</div>
+                <div class="alert-title">PROTOCOL EXECUTION INITIATED</div>
+            </div>
+            <div class="alert-protocol-name" id="alertProtocolName">PROTOCOL [CLASSIFIED]</div>
+            <div class="alert-countdown" id="alertCountdown">10</div>
+            <div class="alert-message">SYSTEM OVERRIDE IN PROGRESS</div>
+            <div class="alert-warning">DO NOT INTERRUPT</div>
         </div>
     </div>
 
