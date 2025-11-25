@@ -20,6 +20,21 @@
     <audio id="alarmSound" loop preload="auto">
         <source src="sound/alarm.mp3" type="audio/mpeg">
     </audio>
+    <audio id="crashSound" preload="auto">
+        <source src="sound/crash.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="powerSound" preload="auto">
+        <source src="sound/power.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="gasterSound" preload="auto">
+        <source src="sound/gaster.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="textSound" preload="auto">
+        <source src="sound/text.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="hoverSound" preload="auto">
+        <source src="sound/hover.mp3" type="audio/mpeg">
+    </audio>
 
     <!-- Hacking Loading Screen -->
     <div id="hackingScreen" class="hacking-screen">
@@ -75,6 +90,10 @@
             <div class="stream-line">[SECURITY] All protocols operational</div>
             <div class="stream-line">[NETWORK] Connection stable</div>
             <div class="stream-line">[AUDIT] Access logs updated</div>
+            <div class="stream-line">[PROJECT 01] Status: STABLE</div>
+            <div class="stream-line">[ERD] Sub-Level 12: Monitoring active</div>
+            <div class="stream-line">[ARCHIVE] Reference 72314: Classified</div>
+            <div class="stream-line">[PROTOCOLS] BLANK SLATE, GOLIATH, LOCKDOWN, SENTRY: Standby</div>
             <div class="stream-line">[SYSTEM] Monitoring active...</div>
             <div class="stream-line">[SECURITY] All protocols operational</div>
             <div class="stream-line">[NETWORK] Connection stable</div>
@@ -230,10 +249,142 @@
                     </div>
                     <div class="terminal-line">
                         <span class="prompt">root@classified:~$</span>
-                        <span class="cursor">_</span>
+                        <span class="cursor" style="color: #00ffff; text-shadow: 0 0 10px #00ffff; font-size: 20px; font-weight: bold; cursor: pointer; animation: cursorPulse 1.5s ease-in-out infinite;" title="Click me 7 times...">_</span>
                     </div>
                 </div>
             </div>
+
+                    <!-- Public Announcements -->
+                    <div class="content-section">
+                        <h2 class="section-title">PUBLIC ANNOUNCEMENTS</h2>
+                        <div class="announcements-section">
+                            <div class="announcement-item">
+                                <div class="announcement-header">
+                                    <span class="announcement-date">15.12.2275</span>
+                                    <span class="announcement-priority high">HIGH PRIORITY</span>
+                                </div>
+                                <div class="announcement-title">Water Conservation Initiative Extended</div>
+                                <div class="announcement-content">Due to ongoing infrastructure maintenance, water conservation measures remain in effect. All Tier 3 residents are reminded to adhere to daily quotas. Violations will result in immediate service suspension.</div>
+                            </div>
+                            <div class="announcement-item">
+                                <div class="announcement-header">
+                                    <span class="announcement-date">12.12.2275</span>
+                                    <span class="announcement-priority medium">NOTICE</span>
+                                </div>
+                                <div class="announcement-title">Scheduled Power Maintenance - Tier 3</div>
+                                <div class="announcement-content">Power grid maintenance scheduled for Sector 7, Blocks 20-25 on 18.12.2275 from 02:00-06:00. Prepare accordingly.</div>
+                            </div>
+                            <div class="announcement-item">
+                                <div class="announcement-header">
+                                    <span class="announcement-date">10.12.2275</span>
+                                    <span class="announcement-priority low">INFORMATION</span>
+                                </div>
+                                <div class="announcement-title">New Employment Opportunities</div>
+                                <div class="announcement-content">Manufacturing Sector 7-B accepting applications for maintenance positions. Clearance Level 1+ required. Apply at Resource Distribution Center.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Public Files Archive -->
+                    <div class="content-section">
+                        <h2 class="section-title">PUBLIC FILES ARCHIVE</h2>
+                        <div class="public-files-section">
+                            <div class="files-grid" id="publicFilesGrid">
+                                <div class="file-item public-file" data-file="PUBLIC_001">
+                                    <div class="file-icon">📋</div>
+                                    <div class="file-name">PUBLIC_001_DISTRICT_OVERVIEW.txt</div>
+                                    <div class="file-meta">DATE: 01.12.2275 | CLEARANCE: PUBLIC</div>
+                                    <div class="file-status public">PUBLIC</div>
+                                </div>
+                                <div class="file-item public-file" data-file="PUBLIC_002">
+                                    <div class="file-icon">📋</div>
+                                    <div class="file-name">PUBLIC_002_RESOURCE_ALLOCATION.txt</div>
+                                    <div class="file-meta">DATE: 15.11.2275 | CLEARANCE: PUBLIC</div>
+                                    <div class="file-status public">PUBLIC</div>
+                                </div>
+                                <div class="file-item public-file" data-file="PUBLIC_003">
+                                    <div class="file-icon">📋</div>
+                                    <div class="file-name">PUBLIC_003_PUBLIC_SAFETY_NOTICE.txt</div>
+                                    <div class="file-meta">DATE: 20.11.2275 | CLEARANCE: PUBLIC</div>
+                                    <div class="file-status public">PUBLIC</div>
+                                </div>
+                                <div class="file-item public-file" data-file="PUBLIC_004">
+                                    <div class="file-icon">📋</div>
+                                    <div class="file-name">PUBLIC_004_CITY_ORDINANCES.txt</div>
+                                    <div class="file-meta">DATE: 05.01.2274 | CLEARANCE: PUBLIC</div>
+                                    <div class="file-status public">PUBLIC</div>
+                                </div>
+                                <div class="file-item public-file" data-file="PUBLIC_005">
+                                    <div class="file-icon">📋</div>
+                                    <div class="file-name">PUBLIC_005_PUBLIC_HEALTH_REPORT.txt</div>
+                                    <div class="file-meta">DATE: 10.12.2275 | CLEARANCE: PUBLIC</div>
+                                    <div class="file-status public">PUBLIC</div>
+                                </div>
+                                <div class="file-item public-file" data-file="PUBLIC_006">
+                                    <div class="file-icon">📋</div>
+                                    <div class="file-name">PUBLIC_006_HOUSING_REGISTRY.txt</div>
+                                    <div class="file-meta">DATE: 08.12.2275 | CLEARANCE: PUBLIC</div>
+                                    <div class="file-status public">PUBLIC</div>
+                                </div>
+                                <div class="file-item public-file" data-file="PUBLIC_007">
+                                    <div class="file-icon">📋</div>
+                                    <div class="file-name">PUBLIC_007_EMPLOYMENT_BOARD.txt</div>
+                                    <div class="file-meta">DATE: 12.12.2275 | CLEARANCE: PUBLIC</div>
+                                    <div class="file-status public">PUBLIC</div>
+                                </div>
+                                <div class="file-item public-file" data-file="PUBLIC_008">
+                                    <div class="file-icon">📋</div>
+                                    <div class="file-name">PUBLIC_008_UTILITY_SCHEDULE.txt</div>
+                                    <div class="file-meta">DATE: 01.12.2275 | CLEARANCE: PUBLIC</div>
+                                    <div class="file-status public">PUBLIC</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Resource Allocation Dashboard -->
+                    <div class="content-section">
+                        <h2 class="section-title">RESOURCE ALLOCATION DASHBOARD</h2>
+                        <div class="resource-dashboard">
+                            <div class="resource-grid">
+                                <div class="resource-item">
+                                    <div class="resource-label">WATER SUPPLY</div>
+                                    <div class="resource-bar">
+                                        <div class="resource-fill water-fill" style="width: 73%;"></div>
+                                    </div>
+                                    <div class="resource-value">73% Capacity</div>
+                                    <div class="resource-status">CRITICAL</div>
+                                </div>
+                                <div class="resource-item">
+                                    <div class="resource-label">POWER GRID</div>
+                                    <div class="resource-bar">
+                                        <div class="resource-fill power-fill" style="width: 87%;"></div>
+                                    </div>
+                                    <div class="resource-value">87% Load</div>
+                                    <div class="resource-status">STABLE</div>
+                                </div>
+                                <div class="resource-item">
+                                    <div class="resource-label">FOOD DISTRIBUTION</div>
+                                    <div class="resource-bar">
+                                        <div class="resource-fill food-fill" style="width: 62%;"></div>
+                                    </div>
+                                    <div class="resource-value">62% Stock</div>
+                                    <div class="resource-status">LOW</div>
+                                </div>
+                                <div class="resource-item">
+                                    <div class="resource-label">MEDICAL SUPPLIES</div>
+                                    <div class="resource-bar">
+                                        <div class="resource-fill medical-fill" style="width: 45%;"></div>
+                                    </div>
+                                    <div class="resource-value">45% Available</div>
+                                    <div class="resource-status">CRITICAL</div>
+                                </div>
+                            </div>
+                            <div class="resource-note">
+                                <span style="color: #888; font-size: 11px; font-style: italic;">Last updated: 15.12.2275 14:32</span>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="content-section">
                         <h2 class="section-title">SECURE FILE ACCESS</h2>
@@ -446,22 +597,22 @@
                             <div class="protocol-list">
                                 <div class="protocol-item" data-protocol="BLANK_SLATE">
                                     <div class="protocol-name">PROTOCOL BLANK SLATE</div>
-                                    <div class="protocol-desc">Memory wipe on civilian network feeds</div>
+                                    <div class="protocol-desc">Memory wipe on civilian network feeds | Project 01 data protection</div>
                                     <button class="protocol-execute">EXECUTE</button>
                                 </div>
                                 <div class="protocol-item" data-protocol="GOLIATH">
                                     <div class="protocol-name">PROTOCOL GOLIATH</div>
-                                    <div class="protocol-desc">Isolation and containment protocol</div>
+                                    <div class="protocol-desc">Emergency termination protocol | Project 01 contingency</div>
                                     <button class="protocol-execute">EXECUTE</button>
                                 </div>
                                 <div class="protocol-item" data-protocol="LOCKDOWN">
                                     <div class="protocol-name">PROTOCOL LOCKDOWN</div>
-                                    <div class="protocol-desc">Compliance enforcement protocol</div>
+                                    <div class="protocol-desc">Compliance enforcement protocol | Project 01 cognitive suppression</div>
                                     <button class="protocol-execute">EXECUTE</button>
                                 </div>
                                 <div class="protocol-item" data-protocol="SENTRY">
                                     <div class="protocol-name">PROTOCOL SENTRY</div>
-                                    <div class="protocol-desc">Perimeter security activation</div>
+                                    <div class="protocol-desc">Perimeter security activation | Project 01 containment ring</div>
                                     <button class="protocol-execute">EXECUTE</button>
                                 </div>
                             </div>
@@ -586,10 +737,76 @@
         </div>
     </div>
 
+    <!-- Minigame - Maze Game - Appears after clicking terminal cursor 7 times -->
+    <div class="content-section hidden" id="minigameSection" style="margin-top: 50px; border: 3px solid #00ffff; background: rgba(0, 255, 255, 0.05); padding: 25px;">
+        <h2 class="section-title" style="color: #00ffff; text-shadow: 0 0 10px #00ffff;">🔓 SECURITY MAZE PROTOCOL</h2>
+        <div style="color: #00ffff; font-size: 12px; margin-bottom: 15px; opacity: 0.8; font-family: 'Courier Prime', monospace;">
+            [SYSTEM] Navigate through the security maze to obtain access code. Use arrow keys to move.
+        </div>
+        <div class="minigame-container">
+            <div class="minigame-header">
+                <div class="minigame-info">
+                    <span>MOVES: <span id="minigameMoves">0</span></span>
+                    <span>STATUS: <span id="minigameStatus">NAVIGATING</span></span>
+                </div>
+            </div>
+            <div class="minigame-instructions">
+                <p style="color: #00ffff; font-size: 13px; margin-bottom: 20px; font-family: 'Courier Prime', monospace;">
+                    Use ARROW KEYS to navigate. Reach the exit (green square) to obtain access code.
+                </p>
+            </div>
+            <div class="maze-container" id="mazeContainer">
+                <canvas id="mazeCanvas" width="400" height="400" style="border: 3px solid #00ffff; background: #000; display: block; margin: 0 auto; cursor: none;"></canvas>
+            </div>
+            <div class="minigame-result hidden" id="minigameResult">
+                <div style="color: #00ff00; font-size: 16px; font-weight: bold; text-align: center; margin-top: 20px; font-family: 'Orbitron', monospace;">
+                    MAZE COMPLETE
+                </div>
+                <div style="color: #00ffff; font-size: 14px; text-align: center; margin-top: 15px; font-family: 'Courier Prime', monospace;">
+                    ACCESS CODE: <span id="minigameCode" style="color: #00ff00; font-weight: bold; font-size: 18px; letter-spacing: 3px;">----</span>
+                </div>
+                <button id="minigameContinueBtn" class="access-button" style="border-color: #00ffff; color: #00ffff; margin-top: 20px; display: block; margin-left: auto; margin-right: auto;">CONTINUE</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Secret Access - Appears after completing minigame -->
+    <div class="content-section hidden" id="hiddenSecretAccessSection" style="margin-top: 50px; border: 3px solid #00ffff; background: rgba(0, 255, 255, 0.05); padding: 25px;">
+        <h2 class="section-title" style="color: #00ffff; text-shadow: 0 0 10px #00ffff;">🔓 HIDDEN ACCESS POINT</h2>
+        <div style="color: #00ffff; font-size: 12px; margin-bottom: 15px; opacity: 0.8; font-family: 'Courier Prime', monospace;">
+            [SYSTEM] Unauthorized access detected. Enter sequence to proceed.
+        </div>
+        <div class="passcode-section">
+            <div class="passcode-label" style="color: #00ffff;">ENTER SEQUENCE:</div>
+            <div class="passcode-input-group">
+                <input type="text" id="hiddenSecretCodeInput" class="passcode-input" placeholder="Enter sequence" autocomplete="off" style="border-color: #00ffff; color: #00ffff;">
+                <button id="hiddenSecretAccessButton" class="access-button" style="border-color: #00ffff; color: #00ffff;">INITIATE</button>
+            </div>
+            <div id="hiddenSecretError" class="passcode-error"></div>
+            <div style="color: #888; font-size: 11px; margin-top: 10px; font-style: italic; font-family: 'Courier Prime', monospace;">
+                Enter the code obtained from the security protocol sequence.
+            </div>
+        </div>
+    </div>
+
     <!-- Project 01 Sequence Screen -->
     <div id="project01Screen" class="project01-screen hidden">
         <div id="project01BlackScreen" class="project01-black-screen hidden">
             <div id="project01TextContainer" class="project01-text-container"></div>
+        </div>
+    </div>
+
+    <!-- Hidden Secret Sequence Screen -->
+    <div id="hiddenSecretScreen" class="project01-screen hidden">
+        <div id="hiddenSecretBlackScreen" class="project01-black-screen hidden">
+            <div id="hiddenSecretTextContainer" class="project01-text-container"></div>
+        </div>
+    </div>
+
+    <!-- Hidden Secret Sequence Screen -->
+    <div id="hiddenSecretScreen" class="project01-screen hidden">
+        <div id="hiddenSecretBlackScreen" class="project01-black-screen hidden">
+            <div id="hiddenSecretTextContainer" class="project01-text-container"></div>
         </div>
     </div>
 

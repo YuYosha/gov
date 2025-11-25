@@ -1,3 +1,34 @@
+// Audio Preloading System
+document.addEventListener('DOMContentLoaded', function() {
+    // Preload all audio elements to ensure they're ready
+    const audioElements = [
+        'glitchSound', 'typingSound', 'backgroundMusic', 'alarmSound',
+        'crashSound', 'powerSound', 'gasterSound', 'textSound'
+    ];
+    
+    audioElements.forEach(audioId => {
+        const audio = document.getElementById(audioId);
+        if (audio) {
+            // Force load by setting volume (triggers loading)
+            audio.volume = audio.volume || 0.5;
+            // Load the audio
+            audio.load();
+            
+            // Handle loading errors
+            audio.addEventListener('error', function() {
+                console.warn(`Failed to load audio: ${audioId}`);
+            });
+            
+            // Ensure audio is ready
+            if (audio.readyState === 0) {
+                audio.addEventListener('canplaythrough', function() {
+                    // Audio is ready
+                }, { once: true });
+            }
+        }
+    });
+});
+
 // Hacking Screen Sequence
 document.addEventListener('DOMContentLoaded', function() {
     const hackingScreen = document.getElementById('hackingScreen');
@@ -294,8 +325,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function triggerRandomGlitch() {
-        // Skip if Project 01 is active
-        if (window.project01Active) return;
+        // Skip if Project 01 or Hidden Secret is active
+        if (window.project01Active || window.hiddenSecretActive) return;
         
         // Skip if city view or file viewer is open (check directly)
         const fileViewerScreen = document.getElementById('fileViewerScreen');
@@ -337,15 +368,15 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Wait for loading screen to finish
     setTimeout(() => {
-        // Initial delay before first glitch (15-20 seconds)
-        const initialDelay = 15000 + Math.random() * 5000;
+        // Initial delay before first glitch (5-10 seconds)
+        const initialDelay = 5000 + Math.random() * 5000;
         
         setTimeout(() => {
             triggerRandomGlitch();
             
             // Recursive scheduling (more efficient than setInterval)
             function scheduleNextGlitch() {
-                const delay = 60000 + Math.random() * 60000; // 60-120 seconds (even less frequent)
+                const delay = 20000 + Math.random() * 20000; // 20-40 seconds (more frequent)
                 setTimeout(() => {
                     triggerRandomGlitch();
                     scheduleNextGlitch();
@@ -2050,6 +2081,738 @@ termination.
 ═══════════════════════════════════════════════════════════════════
 
 END OF DOCUMENT`
+        },
+        'PUBLIC_001': {
+            name: 'PUBLIC_001_DISTRICT_OVERVIEW.txt',
+            content: `AETHELBURG CITY DISTRICTS - PUBLIC INFORMATION
+DATE: 01.12.2275
+CLASSIFICATION: PUBLIC
+AUTHORIZATION: ACC Public Relations Division
+
+═══════════════════════════════════════════════════════════════════
+
+TIER 1: EXECUTIVE DOMES
+Location: City Center
+Population: ~2,500-3,000
+Clearance Required: Level 5 (Executive)
+Description: The administrative and residential center for ACC Directorate members and highest-tier executives. This district maintains the highest security standards and resource allocation priority.
+
+Key Facilities:
+- ACC Central Command
+- Executive Research Complex
+- Private Medical Facilities
+- Directorate Residences
+
+═══════════════════════════════════════════════════════════════════
+
+TIER 2: MIDDLE SPIRES
+Location: Mid-Inner City
+Population: ~45,000-50,000
+Clearance Required: Level 3-4 (Professional)
+Description: Professional class district housing mid-level executives, researchers, engineers, and essential service providers. Residents maintain city infrastructure and research operations.
+
+Key Facilities:
+- Research and Development Labs
+- Technical Training Centers
+- Mid-Level Administrative Offices
+- Standard Residential Blocks
+
+═══════════════════════════════════════════════════════════════════
+
+TIER 3: LOWER SPIRES
+Location: Mid-Outer City
+Population: ~180,000-200,000
+Clearance Required: Level 1-2 (Civilian)
+Description: Working class residential district. Primary employment in manufacturing, maintenance, and service industries. Residents contribute to city operations through essential labor.
+
+Key Facilities:
+- Manufacturing Plants (12 major facilities)
+- Public Housing Blocks
+- Basic Medical Clinics
+- Security Checkpoints
+- Resource Distribution Centers
+
+═══════════════════════════════════════════════════════════════════
+
+TIER 4: GUTTER ZONES
+Location: Outer Perimeter
+Population: ~847,000 (Unlicensed Resident Population)
+Clearance Required: None (Unlicensed)
+Description: Outer district housing unlicensed residents. Infrastructure maintenance ongoing. Access restricted due to security protocols.
+
+Note: Tier 4 currently undergoing infrastructure upgrades. Service interruptions may occur.
+
+═══════════════════════════════════════════════════════════════════
+
+RESOURCE ALLOCATION:
+All tiers receive resources according to Directive 44-Beta allocation protocols. Resource distribution is managed by the Resource Management Division to ensure city stability and operational efficiency.
+
+═══════════════════════════════════════════════════════════════════
+
+END OF DOCUMENT`
+        },
+        'PUBLIC_002': {
+            name: 'PUBLIC_002_RESOURCE_ALLOCATION.txt',
+            content: `AETHELBURG RESOURCE ALLOCATION - PUBLIC SUMMARY
+DATE: 15.11.2275
+CLASSIFICATION: PUBLIC
+AUTHORIZATION: Resource Management Division
+
+═══════════════════════════════════════════════════════════════════
+
+WATER DISTRIBUTION:
+Current Status: CRITICAL CAPACITY
+All residents are reminded to adhere to daily consumption quotas:
+- Tier 1: Standard allocation maintained
+- Tier 2: Standard allocation maintained
+- Tier 3: 18% of total production (quota enforced)
+- Tier 4: Infrastructure maintenance ongoing
+
+Conservation Measures:
+- All non-essential water usage prohibited
+- Violations result in immediate service suspension
+- Report water leaks immediately to Maintenance Division
+
+═══════════════════════════════════════════════════════════════════
+
+POWER GRID STATUS:
+Current Load: 87% (STABLE)
+Scheduled Maintenance:
+- Sector 7, Blocks 20-25: 18.12.2275, 02:00-06:00
+- Prepare for temporary service interruption
+
+Power Conservation:
+- Unnecessary lighting prohibited after 22:00
+- High-consumption devices restricted during peak hours
+- Violations may result in service suspension
+
+═══════════════════════════════════════════════════════════════════
+
+FOOD DISTRIBUTION:
+Current Stock: 62% (LOW)
+Distribution Schedule:
+- Tier 1: Daily distribution
+- Tier 2: Daily distribution
+- Tier 3: Weekly rations (Sundays, 08:00-16:00)
+- Tier 4: Contact Resource Distribution Center
+
+Ration Cards Required:
+All Tier 3 and Tier 4 residents must present valid ration cards at distribution centers. Lost or damaged cards must be reported immediately.
+
+═══════════════════════════════════════════════════════════════════
+
+MEDICAL SUPPLIES:
+Current Availability: 45% (CRITICAL)
+Priority Allocation:
+- Tier 1: Full access
+- Tier 2: Standard access
+- Tier 3: Emergency cases only
+- Tier 4: Contact Emergency Services
+
+Medical Emergency Protocol:
+In case of medical emergency, contact Emergency Services immediately. Response time varies by district and priority level.
+
+═══════════════════════════════════════════════════════════════════
+
+RESOURCE TAX INFORMATION:
+All residents are subject to Resource Tax based on tier classification and consumption levels. Tax rates are determined by Directive 44-Beta and are non-negotiable.
+
+Payment Methods:
+- Standard Credits (preferred)
+- Labor vouchers (Tier 3 and Tier 4 only)
+- Service credits (approved cases only)
+
+═══════════════════════════════════════════════════════════════════
+
+END OF DOCUMENT`
+        },
+        'PUBLIC_003': {
+            name: 'PUBLIC_003_PUBLIC_SAFETY_NOTICE.txt',
+            content: `PUBLIC SAFETY NOTICE
+DATE: 20.11.2275
+CLASSIFICATION: PUBLIC
+AUTHORIZATION: ACC Security Division
+
+═══════════════════════════════════════════════════════════════════
+
+CURFEW PROTOCOLS:
+All Tier 3 and Tier 4 residents must observe curfew hours:
+- Weekdays: 22:00 - 06:00
+- Weekends: 23:00 - 06:00
+- Violations result in immediate detention
+
+Exceptions:
+- Essential service workers with valid permits
+- Medical emergencies (with documentation)
+- Authorized personnel with clearance
+
+═══════════════════════════════════════════════════════════════════
+
+SECURITY CHECKPOINTS:
+All residents must carry valid identification at all times. Random security checks are conducted throughout all districts. Failure to present identification results in immediate detention.
+
+Required Documents:
+- Resident ID Card
+- Clearance Level Badge
+- Employment Verification (if applicable)
+- Resource Ration Card
+
+═══════════════════════════════════════════════════════════════════
+
+REPORTING SUSPICIOUS ACTIVITY:
+If you observe suspicious activity, report immediately to Security Division:
+- Emergency Hotline: [REDACTED]
+- Security Checkpoints: Available 24/7
+- Online Reporting: Available via authorized terminals
+
+Do not approach suspicious individuals. Maintain distance and contact security immediately.
+
+═══════════════════════════════════════════════════════════════════
+
+PROHIBITED ACTIVITIES:
+The following activities are strictly prohibited and result in immediate termination of residency:
+- Unauthorized access to restricted areas
+- Possession of unauthorized communication devices
+- Distribution of unauthorized materials
+- Organization of unauthorized gatherings
+- Resistance activity or planning
+- Sabotage of city infrastructure
+- Theft of resources
+- Violation of clearance protocols
+
+═══════════════════════════════════════════════════════════════════
+
+EMERGENCY PROTOCOLS:
+In case of emergency:
+1. Contact Emergency Services immediately
+2. Follow instructions from security personnel
+3. Do not panic or cause disruption
+4. Await further instructions from authorities
+
+Emergency Services Contact:
+- Medical: [REDACTED]
+- Security: [REDACTED]
+- Fire: [REDACTED]
+- Infrastructure: [REDACTED]
+
+═══════════════════════════════════════════════════════════════════
+
+END OF DOCUMENT`
+        },
+        'PUBLIC_004': {
+            name: 'PUBLIC_004_CITY_ORDINANCES.txt',
+            content: `AETHELBURG CITY ORDINANCES
+DATE: 05.01.2274
+CLASSIFICATION: PUBLIC
+AUTHORIZATION: ACC Legal Division
+
+═══════════════════════════════════════════════════════════════════
+
+ORDINANCE 1: RESOURCE CONSERVATION
+All residents must adhere to resource consumption quotas as determined by Directive 44-Beta. Violations result in:
+- First offense: Warning and service suspension (24 hours)
+- Second offense: Service suspension (72 hours) and fine
+- Third offense: Permanent service termination and relocation
+
+═══════════════════════════════════════════════════════════════════
+
+ORDINANCE 2: CLEARANCE LEVEL COMPLIANCE
+Residents must remain within districts appropriate to their clearance level. Unauthorized access to higher-clearance districts results in immediate detention and potential termination of residency.
+
+Clearance Levels:
+- Level 1-2: Tier 3 and Tier 4 access only
+- Level 3-4: Tier 2, Tier 3, and Tier 4 access
+- Level 5: All districts (with authorization)
+
+═══════════════════════════════════════════════════════════════════
+
+ORDINANCE 3: IDENTIFICATION REQUIREMENTS
+All residents must carry valid identification at all times. Failure to present identification when requested by security personnel results in immediate detention.
+
+Required Information:
+- Full name
+- Resident ID number
+- Clearance level
+- District of residence
+- Employment status
+
+═══════════════════════════════════════════════════════════════════
+
+ORDINANCE 4: COMMUNICATION RESTRICTIONS
+Unauthorized communication devices are prohibited. All communication must occur through authorized channels monitored by Security Division.
+
+Prohibited:
+- Unauthorized radio equipment
+- Unmonitored communication devices
+- Encrypted communication (without authorization)
+- Communication with resistance elements
+
+═══════════════════════════════════════════════════════════════════
+
+ORDINANCE 5: ASSEMBLY RESTRICTIONS
+Unauthorized gatherings of more than 5 individuals are prohibited without prior authorization from Security Division.
+
+Exceptions:
+- Authorized public events
+- Religious services (with permit)
+- Educational gatherings (with authorization)
+- Employment-related meetings
+
+═══════════════════════════════════════════════════════════════════
+
+ORDINANCE 6: EMPLOYMENT REQUIREMENTS
+All able-bodied residents must maintain employment or face resource allocation reduction. Unemployment benefits are available only to those with valid medical documentation.
+
+Employment Verification:
+- Monthly verification required
+- Failure to verify results in resource reduction
+- False documentation results in termination
+
+═══════════════════════════════════════════════════════════════════
+
+ORDINANCE 7: HOUSING ASSIGNMENTS
+Housing assignments are determined by clearance level and employment status. Unauthorized residence changes are prohibited.
+
+Housing Protocol:
+- Apply through Housing Registry
+- Approval required before relocation
+- Unauthorized relocation results in immediate eviction
+
+═══════════════════════════════════════════════════════════════════
+
+ORDINANCE 8: RESOURCE TAX COMPLIANCE
+All residents must pay Resource Tax according to tier classification and consumption levels. Non-payment results in:
+- Service suspension
+- Asset forfeiture
+- Potential relocation
+
+═══════════════════════════════════════════════════════════════════
+
+VIOLATION PENALTIES:
+Violations of city ordinances result in penalties ranging from warnings to termination of residency. Severe violations may result in immediate detention and relocation to processing centers.
+
+═══════════════════════════════════════════════════════════════════
+
+END OF DOCUMENT`
+        },
+        'PUBLIC_005': {
+            name: 'PUBLIC_005_PUBLIC_HEALTH_REPORT.txt',
+            content: `AETHELBURG PUBLIC HEALTH REPORT
+DATE: 10.12.2275
+CLASSIFICATION: PUBLIC
+AUTHORIZATION: ACC Health Division
+
+═══════════════════════════════════════════════════════════════════
+
+CURRENT HEALTH STATUS:
+Overall city health status: STABLE
+No major outbreaks reported in the past 30 days.
+
+═══════════════════════════════════════════════════════════════════
+
+COMMON ILLNESSES:
+Tier 3 and Tier 4 residents are advised to be aware of common illnesses:
+
+1. Waterborne Illnesses:
+   - Symptoms: Nausea, diarrhea, fever
+   - Prevention: Boil all water before consumption
+   - Treatment: Contact medical facilities if symptoms persist
+
+2. Respiratory Infections:
+   - Symptoms: Cough, difficulty breathing, fever
+   - Prevention: Avoid crowded areas, maintain hygiene
+   - Treatment: Rest and hydration, seek medical attention if severe
+
+3. Nutritional Deficiencies:
+   - Symptoms: Fatigue, weakness, dizziness
+   - Prevention: Follow ration guidelines, supplement when possible
+   - Treatment: Increase nutrient intake, contact medical facilities
+
+═══════════════════════════════════════════════════════════════════
+
+MEDICAL FACILITY STATUS:
+- Tier 1: Fully operational, no wait times
+- Tier 2: Operational, minimal wait times
+- Tier 3: Operational, extended wait times (8-12 hours for non-emergency)
+- Tier 4: Limited services, contact Emergency Services
+
+═══════════════════════════════════════════════════════════════════
+
+VACCINATION PROGRAMS:
+Routine vaccinations available at all medical facilities:
+- Standard immunization schedule maintained
+- Priority given to Tier 1 and Tier 2 residents
+- Tier 3 and Tier 4: Contact medical facilities for scheduling
+
+═══════════════════════════════════════════════════════════════════
+
+SANITATION PROTOCOLS:
+All residents are reminded to maintain proper sanitation:
+- Dispose of waste in designated areas only
+- Report sanitation issues immediately
+- Maintain personal hygiene to prevent disease spread
+
+Sanitation Violations:
+- Improper waste disposal results in fines
+- Repeated violations result in service suspension
+
+═══════════════════════════════════════════════════════════════════
+
+HEALTH EMERGENCIES:
+In case of health emergency:
+1. Contact Emergency Medical Services immediately
+2. Provide clear location and symptoms
+3. Follow instructions from medical personnel
+4. Await medical response team
+
+Emergency Contact: [REDACTED]
+
+═══════════════════════════════════════════════════════════════════
+
+PREVENTIVE MEASURES:
+- Maintain proper hygiene
+- Follow resource consumption guidelines
+- Report health concerns early
+- Attend scheduled medical check-ups
+- Follow vaccination schedules
+
+═══════════════════════════════════════════════════════════════════
+
+END OF DOCUMENT`
+        },
+        'PUBLIC_006': {
+            name: 'PUBLIC_006_HOUSING_REGISTRY.txt',
+            content: `AETHELBURG HOUSING REGISTRY
+DATE: 08.12.2275
+CLASSIFICATION: PUBLIC
+AUTHORIZATION: ACC Housing Division
+
+═══════════════════════════════════════════════════════════════════
+
+HOUSING ALLOCATION:
+Housing assignments are determined by:
+- Clearance level
+- Employment status
+- Family size
+- Resource allocation history
+- Security clearance status
+
+═══════════════════════════════════════════════════════════════════
+
+TIER 1 HOUSING:
+- Luxury compounds (5,000+ square meters average)
+- Private facilities included
+- Climate-controlled environments
+- Private security
+- Application: Directorate approval required
+
+═══════════════════════════════════════════════════════════════════
+
+TIER 2 HOUSING:
+- Standard residential units (80-120 square meters)
+- Shared facilities
+- Basic amenities included
+- Application: Professional clearance required
+
+═══════════════════════════════════════════════════════════════════
+
+TIER 3 HOUSING:
+- Dense residential blocks (15 square meters per person average)
+- Shared facilities
+- Basic amenities
+- Application: Available to all Level 1-2 clearance holders
+
+Current Availability:
+- Sector 7, Blocks 20-30: Limited availability
+- Sector 7, Blocks 31-40: Waitlist (6-12 months)
+- Sector 7, Blocks 41-50: Waitlist (12-18 months)
+
+Application Process:
+1. Submit application at Housing Registry Office
+2. Provide clearance documentation
+3. Employment verification required
+4. Wait for approval (processing time: 2-4 weeks)
+5. Assignment based on availability
+
+═══════════════════════════════════════════════════════════════════
+
+TIER 4 HOUSING:
+- Unlicensed resident housing
+- Basic shelter facilities
+- Application: Contact Resource Distribution Center
+
+Note: Tier 4 housing currently undergoing infrastructure maintenance. Limited availability.
+
+═══════════════════════════════════════════════════════════════════
+
+HOUSING TRANSFERS:
+Residents may apply for housing transfers under the following conditions:
+- Clearance level increase
+- Employment status change
+- Family size change
+- Medical necessity (with documentation)
+
+Transfer Process:
+- Application required
+- Approval from Housing Division
+- Security clearance verification
+- Resource allocation adjustment
+
+═══════════════════════════════════════════════════════════════════
+
+HOUSING VIOLATIONS:
+The following violations result in immediate eviction:
+- Unauthorized residence changes
+- Housing fraud
+- Unauthorized subletting
+- Security violations
+- Resource tax non-payment
+
+═══════════════════════════════════════════════════════════════════
+
+APPLICATION LOCATIONS:
+- Tier 1: Directorate Administrative Office
+- Tier 2: Professional Services Office
+- Tier 3: Housing Registry Office (Sector 7-B)
+- Tier 4: Resource Distribution Center
+
+═══════════════════════════════════════════════════════════════════
+
+END OF DOCUMENT`
+        },
+        'PUBLIC_007': {
+            name: 'PUBLIC_007_EMPLOYMENT_BOARD.txt',
+            content: `AETHELBURG EMPLOYMENT BOARD
+DATE: 12.12.2275
+CLASSIFICATION: PUBLIC
+AUTHORIZATION: ACC Employment Division
+
+═══════════════════════════════════════════════════════════════════
+
+CURRENT OPENINGS:
+
+MANUFACTURING SECTOR 7-B:
+Position: Maintenance Technician
+Requirements:
+- Clearance Level 1+
+- Basic mechanical knowledge
+- Physical fitness required
+- Shift work (rotating schedule)
+Compensation: 50,000-75,000 Standard Credits annually
+Application: Resource Distribution Center, Sector 7-B
+
+═══════════════════════════════════════════════════════════════════
+
+WATER FILTRATION PLANT (WFP-03):
+Position: Plant Operator
+Requirements:
+- Clearance Level 2+
+- Technical training preferred
+- Shift work required
+Compensation: 75,000-100,000 Standard Credits annually
+Application: WFP-03 Administrative Office
+
+═══════════════════════════════════════════════════════════════════
+
+SECURITY DIVISION:
+Position: Security Personnel
+Requirements:
+- Clearance Level 2+
+- Physical fitness required
+- Background check mandatory
+- Training provided
+Compensation: 80,000-120,000 Standard Credits annually
+Application: Security Division Recruitment Office
+
+═══════════════════════════════════════════════════════════════════
+
+RESOURCE DISTRIBUTION:
+Position: Distribution Center Worker
+Requirements:
+- Clearance Level 1+
+- Basic literacy
+- Physical labor required
+Compensation: 45,000-60,000 Standard Credits annually
+Application: Resource Distribution Center
+
+═══════════════════════════════════════════════════════════════════
+
+MEDICAL FACILITIES:
+Position: Medical Assistant
+Requirements:
+- Clearance Level 2+
+- Medical training preferred
+- Certification required
+Compensation: 90,000-130,000 Standard Credits annually
+Application: Medical Facilities Administrative Office
+
+═══════════════════════════════════════════════════════════════════
+
+RESEARCH AND DEVELOPMENT:
+Position: Research Assistant
+Requirements:
+- Clearance Level 3+
+- Technical education required
+- Background check mandatory
+Compensation: 100,000-150,000 Standard Credits annually
+Application: Research Division (Tier 2)
+
+═══════════════════════════════════════════════════════════════════
+
+EMPLOYMENT REQUIREMENTS:
+All residents must maintain employment or face resource allocation reduction. Unemployment benefits available only with valid medical documentation.
+
+Employment Verification:
+- Monthly verification required
+- Failure to verify results in resource reduction
+- False documentation results in termination
+
+═══════════════════════════════════════════════════════════════════
+
+APPLICATION PROCESS:
+1. Review job requirements
+2. Submit application at designated location
+3. Provide clearance documentation
+4. Complete background check (if required)
+5. Interview process
+6. Training (if applicable)
+7. Employment assignment
+
+═══════════════════════════════════════════════════════════════════
+
+END OF DOCUMENT`
+        },
+        'PUBLIC_008': {
+            name: 'PUBLIC_008_UTILITY_SCHEDULE.txt',
+            content: `AETHELBURG UTILITY SCHEDULE
+DATE: 01.12.2275
+CLASSIFICATION: PUBLIC
+AUTHORIZATION: ACC Infrastructure Division
+
+═══════════════════════════════════════════════════════════════════
+
+WATER DISTRIBUTION SCHEDULE:
+
+TIER 1:
+- Daily distribution: 24/7 availability
+- No restrictions
+- Priority access maintained
+
+TIER 2:
+- Daily distribution: 06:00-22:00
+- Standard quotas enforced
+- Priority access during peak hours
+
+TIER 3:
+- Distribution: Sundays, 08:00-16:00
+- Quota: 18% of total production per resident
+- Ration cards required
+- Violations result in service suspension
+
+TIER 4:
+- Contact Resource Distribution Center
+- Infrastructure maintenance ongoing
+- Limited availability
+
+═══════════════════════════════════════════════════════════════════
+
+POWER GRID SCHEDULE:
+
+TIER 1:
+- 24/7 power availability
+- No restrictions
+- Priority routing maintained
+
+TIER 2:
+- 24/7 power availability
+- Peak hour restrictions may apply
+- Standard routing
+
+TIER 3:
+- Scheduled blackouts: 3-4 times per week
+- Peak hours: 18:00-22:00 (reduced capacity)
+- Brownouts common during high demand
+- Conservation required
+
+TIER 4:
+- Limited power availability
+- Infrastructure maintenance ongoing
+- Contact Emergency Services for emergencies
+
+═══════════════════════════════════════════════════════════════════
+
+SCHEDULED MAINTENANCE:
+
+DECEMBER 2275:
+- Sector 7, Blocks 20-25: 18.12.2275, 02:00-06:00
+  Power grid maintenance - prepare for service interruption
+
+- Sector 7, Blocks 26-30: 20.12.2275, 02:00-06:00
+  Water system maintenance - prepare for service interruption
+
+- Sector 7, Blocks 31-35: 22.12.2275, 02:00-06:00
+  Infrastructure upgrade - prepare for service interruption
+
+═══════════════════════════════════════════════════════════════════
+
+FOOD DISTRIBUTION SCHEDULE:
+
+TIER 1:
+- Daily distribution
+- No restrictions
+- Priority access
+
+TIER 2:
+- Daily distribution
+- Standard quotas
+- Priority access during peak hours
+
+TIER 3:
+- Weekly rations: Sundays, 08:00-16:00
+- Ration cards required
+- One distribution per week per resident
+- Missed distribution cannot be rescheduled
+
+TIER 4:
+- Contact Resource Distribution Center
+- Limited availability
+- Infrastructure maintenance ongoing
+
+═══════════════════════════════════════════════════════════════════
+
+MEDICAL SERVICES SCHEDULE:
+
+TIER 1:
+- 24/7 availability
+- No wait times
+- Priority access
+
+TIER 2:
+- Standard hours: 08:00-20:00
+- Minimal wait times
+- Emergency services: 24/7
+
+TIER 3:
+- Standard hours: 08:00-18:00
+- Extended wait times (8-12 hours for non-emergency)
+- Emergency services: 24/7 (delayed response)
+
+TIER 4:
+- Limited services
+- Contact Emergency Services
+- Infrastructure maintenance ongoing
+
+═══════════════════════════════════════════════════════════════════
+
+UTILITY VIOLATIONS:
+Violations of utility schedules and quotas result in:
+- First offense: Warning and service suspension (24 hours)
+- Second offense: Service suspension (72 hours) and fine
+- Third offense: Permanent service termination
+
+═══════════════════════════════════════════════════════════════════
+
+END OF DOCUMENT`
         }
     };
     
@@ -2320,10 +3083,21 @@ END OF DOCUMENT`
         }
         
         // Phase 1: Uncontrollable glitch for 3 seconds with crash sound
-        const crashSound = new Audio('sound/crash.mp3');
-        crashSound.volume = 0.9;
-        crashSound.loop = true;
-        crashSound.play().catch(() => {});
+        const crashSound = document.getElementById('crashSound');
+        if (crashSound) {
+            crashSound.volume = 0.9;
+            crashSound.loop = true;
+            crashSound.currentTime = 0;
+            // Ensure audio is loaded before playing
+            if (crashSound.readyState >= 2) {
+                crashSound.play().catch(() => {});
+            } else {
+                crashSound.addEventListener('canplaythrough', function() {
+                    crashSound.play().catch(() => {});
+                }, { once: true });
+                crashSound.load();
+            }
+        }
         
         const glitchInterval = setInterval(() => {
             document.body.classList.add('glitch-extreme');
@@ -2336,8 +3110,10 @@ END OF DOCUMENT`
             clearInterval(glitchInterval);
             
             // Stop crash sound
-            crashSound.pause();
-            crashSound.currentTime = 0;
+            if (crashSound) {
+                crashSound.pause();
+                crashSound.currentTime = 0;
+            }
             
             // Phase 2: Show black screen
             if (project01Screen) {
@@ -2348,28 +3124,53 @@ END OF DOCUMENT`
             }
             
             // Play power sound
-            const powerSound = new Audio('sound/power.mp3');
-            powerSound.volume = 0.8;
-            powerSound.play().catch(() => {});
+            const powerSound = document.getElementById('powerSound');
+            if (powerSound) {
+                powerSound.volume = 0.8;
+                powerSound.currentTime = 0;
+                // Ensure audio is loaded before playing
+                if (powerSound.readyState >= 2) {
+                    powerSound.play().catch(() => {});
+                } else {
+                    powerSound.addEventListener('canplaythrough', function() {
+                        powerSound.play().catch(() => {});
+                    }, { once: true });
+                    powerSound.load();
+                }
+            }
             
             // Start gaster sound a bit later (3 seconds after black screen) - plays once, not looped
             setTimeout(() => {
-                const gasterSound = new Audio('sound/gaster.mp3');
-                gasterSound.loop = false; // Play only once
-                gasterSound.volume = 0;
-                gasterSound.play().catch(() => {});
-                
-                // Fade in gaster sound over 8 seconds (longer and quieter)
-                const fadeInterval = setInterval(() => {
-                    if (gasterSound.volume < 0.4) { // More quiet (0.4 instead of 0.7)
-                        gasterSound.volume += 0.005; // Slower fade (0.005 instead of 0.05)
+                const gasterSound = document.getElementById('gasterSound');
+                if (gasterSound) {
+                    gasterSound.loop = false; // Play only once
+                    gasterSound.volume = 0;
+                    gasterSound.currentTime = 0;
+                    
+                    // Ensure audio is loaded before playing
+                    const playGaster = () => {
+                        gasterSound.play().catch(() => {});
+                        
+                        // Fade in gaster sound over 8 seconds (longer and quieter)
+                        const fadeInterval = setInterval(() => {
+                            if (gasterSound.volume < 0.4) { // More quiet (0.4 instead of 0.7)
+                                gasterSound.volume += 0.005; // Slower fade (0.005 instead of 0.05)
+                            } else {
+                                clearInterval(fadeInterval);
+                            }
+                        }, 100);
+                    };
+                    
+                    if (gasterSound.readyState >= 2) {
+                        playGaster();
                     } else {
-                        clearInterval(fadeInterval);
+                        gasterSound.addEventListener('canplaythrough', playGaster, { once: true });
+                        gasterSound.load();
                     }
-                }, 100);
-                
-                // Store gasterSound in a way that's accessible to the final glitch
-                window.project01GasterSound = gasterSound;
+                    
+                    // Store gasterSound in a way that's accessible to the final glitch
+                    window.project01GasterSound = gasterSound;
+                }
             }, 3000);
             
             // Phase 3: Wait 7 seconds, then start text
@@ -2404,9 +3205,20 @@ END OF DOCUMENT`
                             }, 50);
                             
                             // Play crash sound
-                            const finalCrashSound = new Audio('sound/crash.mp3');
-                            finalCrashSound.volume = 0.9;
-                            finalCrashSound.play().catch(() => {});
+                            const finalCrashSound = document.getElementById('crashSound');
+                            if (finalCrashSound) {
+                                finalCrashSound.volume = 0.9;
+                                finalCrashSound.currentTime = 0;
+                                // Ensure audio is loaded before playing
+                                if (finalCrashSound.readyState >= 2) {
+                                    finalCrashSound.play().catch(() => {});
+                                } else {
+                                    finalCrashSound.addEventListener('canplaythrough', function() {
+                                        finalCrashSound.play().catch(() => {});
+                                    }, { once: true });
+                                    finalCrashSound.load();
+                                }
+                            }
                             
                             // After 5 seconds, close the page
                             setTimeout(() => {
@@ -2431,9 +3243,12 @@ END OF DOCUMENT`
                         
                         // Type out text character by character
                         let charIndex = 0;
-                        const textSound = new Audio('sound/text.mp3');
-                        textSound.volume = 0.5;
+                        const textSound = document.getElementById('textSound');
                         let textSoundPlaying = false;
+                        
+                        if (textSound) {
+                            textSound.volume = 0.7;
+                        }
                         
                         function typeNextChar() {
                             if (charIndex < text.length) {
@@ -2441,17 +3256,27 @@ END OF DOCUMENT`
                                 charIndex++;
                                 
                                 // Play text sound only while typing
-                                if (charIndex % 3 === 0 && !textSoundPlaying) {
+                                if (textSound && charIndex % 3 === 0 && !textSoundPlaying) {
                                     textSound.currentTime = 0;
-                                    textSound.play().catch(() => {});
+                                    // Ensure audio is loaded before playing
+                                    if (textSound.readyState >= 2) {
+                                        textSound.play().catch(() => {});
+                                    } else {
+                                        textSound.addEventListener('canplaythrough', function() {
+                                            textSound.play().catch(() => {});
+                                        }, { once: true });
+                                        textSound.load();
+                                    }
                                     textSoundPlaying = true;
                                 }
                                 
                                 setTimeout(typeNextChar, 80); // Speed of typing
                             } else {
                                 // Text complete, stop text sound
-                                textSound.pause();
-                                textSound.currentTime = 0;
+                                if (textSound) {
+                                    textSound.pause();
+                                    textSound.currentTime = 0;
+                                }
                                 textSoundPlaying = false;
                                 
                                 // Wait 5 seconds before next (no sound during pause)
@@ -2628,7 +3453,12 @@ document.addEventListener('DOMContentLoaded', function() {
         "Malware signature detected. Quarantine protocol active.",
         "Security clearance violation. Access denied.",
         "Emergency protocols activated. All non-essential systems offline.",
-        "Biometric scan required. Identity verification pending."
+        "Biometric scan required. Identity verification pending.",
+        "Project 01 monitoring system: Status check required.",
+        "ERD Research Complex: Unusual activity in Sub-Level 12.",
+        "Archive reference 72314: Access attempt logged.",
+        "Protocol HUSH: Fluctuation detected in symbiotic marker.",
+        "Sector 7, Block 23: Surveillance anomaly detected."
     ];
     
     const alertPriorities = ['CRITICAL', 'HIGH', 'MEDIUM', 'WARNING', 'ALERT'];
@@ -2647,8 +3477,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function createSecurityAlert() {
-        // Skip if Project 01 is active
-        if (window.project01Active) return;
+        // Skip if Project 01 or Hidden Secret is active
+        if (window.project01Active || window.hiddenSecretActive) return;
         
         if (activeAlerts >= maxAlerts) return;
         
@@ -3725,6 +4555,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <p>• ACC Central Command (primary administrative hub, coordinates all city operations)<br>
                         • Directorate Residences (luxury compounds, average size 5,000+ square meters)<br>
                         • Executive Research Complex (state-of-the-art laboratories, classified research projects)<br>
+                        • ERD Research Complex - Project 01 Habitat (Sub-Level 12, classified location)<br>
                         • Private Resource Distribution Hubs (exclusive access to premium resources)<br>
                         • The Apex (exclusive social club, membership by invitation only)<br>
                         • Executive Medical Center (advanced facilities, experimental treatments available)<br>
@@ -3770,6 +4601,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="article-section">
                         <h3>NOTABLE FACILITIES</h3>
                         <p>• Research and Development Labs<br>
+                        • ERD Behavioral Sciences Division (Project 01 monitoring and analysis)<br>
                         • Technical Training Centers<br>
                         • Mid-Level Administrative Offices<br>
                         • Standard Residential Blocks</p>
@@ -3842,6 +4674,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         • Maintenance Workshops (city-wide infrastructure support)<br>
                         • Public Service Centers (overcrowded, understaffed)<br>
                         • Dense Residential Blocks (average 30-40 stories, 200-300 units per building)<br>
+                        • Sector 7, Block 23, Unit 14 (Pre-Collapse location - [CLASSIFIED: Project 01 memory anchor point])<br>
                         • Security Checkpoints (15 major checkpoints, constant patrols)<br>
                         • Processing Centers (where arrested residents are held before "relocation")<br>
                         • Mass Crematoriums (handles 200+ bodies weekly)</p>
@@ -4151,6 +4984,12 @@ document.addEventListener('DOMContentLoaded', function() {
                             <div style="margin-bottom: 8px; color: #888;">[SYSTEM LOG - AUTO-GENERATED]</div>
                             <div>REFERENCE: ARCHIVE-<span class="archive-code-highlight">72314</span></div>
                             <div style="margin-top: 5px; font-size: 9px; opacity: 0.5;">Cross-reference with ERD Lab Breach Report (File 007) for complete assessment matrix.</div>
+                            <div style="margin-top: 8px; padding: 8px; background: rgba(255, 0, 0, 0.1); border-left: 2px solid #ff0000; font-size: 9px; opacity: 0.8;">
+                                <div style="color: #ff0000; font-weight: bold; margin-bottom: 4px;">PROJECT 01 CONNECTION:</div>
+                                <div>Pre-Collapse Location: Sector 7, Block 23, Unit 14 (Memory fragment anchor point)</div>
+                                <div style="margin-top: 3px;">Protocol Colors Reference: BLANK SLATE (Red), GOLIATH (Yellow), LOCKDOWN (Blue), SENTRY (Green)</div>
+                                <div style="margin-top: 3px;">Final Access Code: 9147 (Project 01 Restricted Access)</div>
+                            </div>
                         </div>
                     </div>
                     <div style="margin-top: 20px; padding: 10px; border-top: 2px solid #ff0000; color: #888; font-size: 11px;">
@@ -4318,6 +5157,11 @@ document.addEventListener('DOMContentLoaded', function() {
         protocolAlertScreen.classList.remove('protocol-yellow', 'protocol-red', 'protocol-green', 'protocol-blue');
         
         // Add color class based on protocol
+        // Note: Protocol colors correspond to Project 01 control matrix priorities
+        // RED (BLANK SLATE): Emergency network memory wipe - Project 01 data protection
+        // YELLOW (GOLIATH): Emergency termination - Project 01 contingency protocol
+        // BLUE (LOCKDOWN): Compliance enforcement - Project 01 cognitive suppression
+        // GREEN (SENTRY): Perimeter defense - Project 01 containment ring
         const protocolColors = {
             'BLANK SLATE': 'protocol-red',
             'GOLIATH': 'protocol-yellow',
@@ -4348,7 +5192,15 @@ document.addEventListener('DOMContentLoaded', function() {
         if (alarmSound) {
             alarmSound.currentTime = 0;
             alarmSound.volume = 0.7;
-            alarmSound.play().catch(() => {});
+            // Ensure audio is loaded before playing
+            if (alarmSound.readyState >= 2) {
+                alarmSound.play().catch(() => {});
+            } else {
+                alarmSound.addEventListener('canplaythrough', function() {
+                    alarmSound.play().catch(() => {});
+                }, { once: true });
+                alarmSound.load();
+            }
         }
         
         // Countdown from 5 to 0
@@ -4427,20 +5279,34 @@ document.addEventListener('DOMContentLoaded', function() {
         'Network anomaly in Gutter Zone 4',
         'Backup server activated',
         'Intrusion detection triggered',
-        'Data stream rerouted'
+        'Data stream rerouted',
+        'Terminal cursor interaction pattern detected',
+        'Repeated access attempt on terminal interface',
+        'Terminal anomaly: cursor interaction count increasing',
+        'Interface access pattern: consecutive interactions logged',
+        'Terminal monitoring: 7 interaction threshold approaching',
+        'System alert: Terminal cursor receiving multiple inputs',
+        'Access pattern analysis: Terminal interface under observation',
+        'Network log: Terminal interaction sequence detected'
     ];
     
+    const specialClueMessage = 'Look for the terminal... something is out of place... look at the color';
+    
     function addActivityMessage() {
-        const message = activityMessages[Math.floor(Math.random() * activityMessages.length)];
+        // Occasionally show the special clue message (about 15% chance)
+        const useSpecialClue = Math.random() < 0.15;
+        const message = useSpecialClue ? specialClueMessage : activityMessages[Math.floor(Math.random() * activityMessages.length)];
         const item = document.createElement('div');
         item.className = 'activity-item';
         const now = new Date();
         const time = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
         const status = Math.random() > 0.3 ? 'blocked' : 'monitored';
         
+        const detailClass = useSpecialClue ? 'activity-detail activity-detail-jittery' : 'activity-detail';
+        
         item.innerHTML = `
             <span class="activity-time">[${time}]</span>
-            <span class="activity-detail">${message}</span>
+            <span class="${detailClass}">${message}</span>
             <span class="activity-status ${status}">${status.toUpperCase()}</span>
         `;
         networkActivity.insertBefore(item, networkActivity.firstChild);
@@ -4508,5 +5374,703 @@ document.addEventListener('DOMContentLoaded', function() {
         recordFeed.textContent = 'RECORD';
         pauseFeed.textContent = 'PAUSE';
     });
+});
+
+// Hidden Secret Puzzle - Click terminal cursor 7 times to unlock minigame
+document.addEventListener('DOMContentLoaded', function() {
+    const terminalCursor = document.querySelector('.cursor');
+    const minigameSection = document.getElementById('minigameSection');
+    let cursorClickCount = 0;
+    const REQUIRED_CLICKS = 7;
+    
+    if (terminalCursor && minigameSection) {
+        // Make cursor more obvious
+        terminalCursor.style.cursor = 'pointer';
+        terminalCursor.style.color = '#00ffff';
+        terminalCursor.style.textShadow = '0 0 10px #00ffff, 0 0 20px #00ffff';
+        terminalCursor.style.fontSize = '20px';
+        terminalCursor.style.fontWeight = 'bold';
+        terminalCursor.style.animation = 'cursorPulse 1.5s ease-in-out infinite';
+        terminalCursor.title = 'Click me 7 times...';
+        terminalCursor.style.position = 'relative';
+        terminalCursor.style.display = 'inline-block';
+        
+        // Add visual feedback counter
+        const clickCounter = document.createElement('span');
+        clickCounter.id = 'cursorClickCounter';
+        clickCounter.style.cssText = 'position: absolute; top: -25px; left: 0; color: #00ffff; font-size: 12px; font-family: "Courier Prime", monospace; opacity: 0; transition: opacity 0.3s; pointer-events: none;';
+        clickCounter.textContent = '0/7';
+        terminalCursor.parentElement.style.position = 'relative';
+        terminalCursor.parentElement.appendChild(clickCounter);
+        
+        terminalCursor.addEventListener('click', function() {
+            cursorClickCount++;
+            
+            // Update counter
+            if (clickCounter) {
+                clickCounter.textContent = `${cursorClickCount}/${REQUIRED_CLICKS}`;
+                clickCounter.style.opacity = '1';
+                setTimeout(() => {
+                    clickCounter.style.opacity = '0';
+                }, 1000);
+            }
+            
+            // Add stronger glitch effect on click
+            document.body.classList.add('glitch-medium');
+            setTimeout(() => {
+                document.body.classList.remove('glitch-medium');
+            }, 500);
+            
+            // Make cursor flash
+            terminalCursor.style.color = '#ffffff';
+            terminalCursor.style.textShadow = '0 0 20px #ffffff, 0 0 40px #00ffff';
+            setTimeout(() => {
+                terminalCursor.style.color = '#00ffff';
+                terminalCursor.style.textShadow = '0 0 10px #00ffff, 0 0 20px #00ffff';
+            }, 200);
+            
+            // Play glitch sound
+            const glitchSound = document.getElementById('glitchSound');
+            if (glitchSound) {
+                glitchSound.currentTime = 0;
+                if (glitchSound.readyState >= 2) {
+                    glitchSound.play().catch(() => {});
+                }
+            }
+            
+            if (cursorClickCount >= REQUIRED_CLICKS) {
+                // Reveal minigame section
+                minigameSection.classList.remove('hidden');
+                
+                // Add terminal log
+                const terminalBody = document.querySelector('.terminal-body');
+                const cursor = document.querySelector('.cursor');
+                if (terminalBody && cursor) {
+                    const logLine = document.createElement('div');
+                    logLine.className = 'terminal-line';
+                    logLine.innerHTML = '<span class="output" style="color: #00ffff; text-shadow: 0 0 10px #00ffff;">[SYSTEM] Security protocol sequence initiated. Complete sequence to obtain access code.</span>';
+                    terminalBody.insertBefore(logLine, cursor.parentElement);
+                }
+                
+                // Reset counter and remove animation
+                cursorClickCount = 0;
+                terminalCursor.style.animation = '';
+                terminalCursor.style.color = '#00ff00';
+                terminalCursor.style.textShadow = '0 0 5px #00ff00';
+                if (clickCounter) {
+                    clickCounter.remove();
+                }
+                
+                // Start maze game
+                startMazeGame();
+            }
+        });
+        
+        // Add hover effect
+        terminalCursor.addEventListener('mouseenter', function() {
+            terminalCursor.style.transform = 'scale(1.2)';
+            terminalCursor.style.textShadow = '0 0 15px #00ffff, 0 0 30px #00ffff';
+        });
+        
+        terminalCursor.addEventListener('mouseleave', function() {
+            terminalCursor.style.transform = 'scale(1)';
+            terminalCursor.style.textShadow = '0 0 10px #00ffff, 0 0 20px #00ffff';
+        });
+    }
+});
+
+// Maze Game - Arrow Key Controlled
+function startMazeGame() {
+    const mazeCanvas = document.getElementById('mazeCanvas');
+    const minigameStatus = document.getElementById('minigameStatus');
+    const minigameMoves = document.getElementById('minigameMoves');
+    const minigameResult = document.getElementById('minigameResult');
+    const minigameCode = document.getElementById('minigameCode');
+    const minigameContinueBtn = document.getElementById('minigameContinueBtn');
+    const hiddenSecretAccessSection = document.getElementById('hiddenSecretAccessSection');
+    const minigameSection = document.getElementById('minigameSection');
+    
+    if (!mazeCanvas) return;
+    
+    const ctx = mazeCanvas.getContext('2d');
+    const cellSize = 20;
+    const cols = 20;
+    const rows = 20;
+    
+    // Maze layout (1 = wall, 0 = path)
+    const maze = [
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+        [1,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1],
+        [1,0,1,0,1,0,1,1,1,1,1,1,1,0,1,0,1,1,0,1],
+        [1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1],
+        [1,0,1,1,1,1,1,1,1,1,1,0,1,1,1,0,1,0,1,1],
+        [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1],
+        [1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1],
+        [1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
+        [1,0,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1],
+        [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+        [1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,0,1],
+        [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+        [1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+        [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+        [1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,0,1],
+        [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+        [1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+        [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1],
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1]
+    ];
+    
+    // Player position (start at top-left path)
+    let playerX = 1;
+    let playerY = 1;
+    let moves = 0;
+    let gameComplete = false;
+    
+    // Exit position (bottom-right, marked as 2 in maze array)
+    // Looking at last row: [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1]
+    // Position 18 (0-indexed) has the 2, so exitX = 18, exitY = 19 (last row)
+    let exitX = 18;
+    let exitY = 19;
+    
+    // Generate code based on moves - 4 digit number
+    function generateCode() {
+        // Generate a 4-digit code based on moves
+        // Simple formula: (moves * 37 + 1234) % 10000, then ensure it's 4 digits
+        let codeNum = (moves * 37 + 1234) % 10000;
+        // Ensure it's always 4 digits (1000-9999)
+        if (codeNum < 1000) {
+            codeNum = 1000 + (codeNum % 900);
+        }
+        return codeNum.toString().padStart(4, '0');
+    }
+    
+    // Draw maze
+    function drawMaze() {
+        ctx.fillStyle = '#000000';
+        ctx.fillRect(0, 0, mazeCanvas.width, mazeCanvas.height);
+        
+        for (let y = 0; y < rows; y++) {
+            for (let x = 0; x < cols; x++) {
+                const cell = maze[y][x];
+                const xPos = x * cellSize;
+                const yPos = y * cellSize;
+                
+                if (cell === 1) {
+                    // Wall
+                    ctx.fillStyle = '#333333';
+                    ctx.fillRect(xPos, yPos, cellSize, cellSize);
+                    ctx.strokeStyle = '#00ffff';
+                    ctx.lineWidth = 1;
+                    ctx.strokeRect(xPos, yPos, cellSize, cellSize);
+                } else if (cell === 2 || (x === exitX && y === exitY)) {
+                    // Exit (green) - also check coordinates in case cell value doesn't match
+                    ctx.fillStyle = '#003300';
+                    ctx.fillRect(xPos, yPos, cellSize, cellSize);
+                    ctx.fillStyle = '#00ff00';
+                    ctx.fillRect(xPos + 2, yPos + 2, cellSize - 4, cellSize - 4);
+                    ctx.strokeStyle = '#00ff00';
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(xPos, yPos, cellSize, cellSize);
+                    // Add exit marker text
+                    ctx.fillStyle = '#00ff00';
+                    ctx.font = 'bold 10px Courier Prime';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('EXIT', xPos + cellSize/2, yPos + cellSize/2);
+                } else {
+                    // Path
+                    ctx.fillStyle = '#000000';
+                    ctx.fillRect(xPos, yPos, cellSize, cellSize);
+                    ctx.strokeStyle = '#001122';
+                    ctx.lineWidth = 1;
+                    ctx.strokeRect(xPos, yPos, cellSize, cellSize);
+                }
+            }
+        }
+        
+        // Draw player (cyan square)
+        ctx.fillStyle = '#00ffff';
+        ctx.fillRect(playerX * cellSize + 2, playerY * cellSize + 2, cellSize - 4, cellSize - 4);
+        ctx.strokeStyle = '#00ffff';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(playerX * cellSize, playerY * cellSize, cellSize, cellSize);
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = '#00ffff';
+        ctx.fillRect(playerX * cellSize + 4, playerY * cellSize + 4, cellSize - 8, cellSize - 8);
+        ctx.shadowBlur = 0;
+    }
+    
+    // Check if move is valid
+    function canMove(newX, newY) {
+        if (newX < 0 || newX >= cols || newY < 0 || newY >= rows) return false;
+        return maze[newY][newX] !== 1;
+    }
+    
+    // Move player
+    function movePlayer(dx, dy) {
+        if (gameComplete) return;
+        
+        const newX = playerX + dx;
+        const newY = playerY + dy;
+        
+        if (canMove(newX, newY)) {
+            playerX = newX;
+            playerY = newY;
+            moves++;
+            if (minigameMoves) {
+                minigameMoves.textContent = moves;
+            }
+            
+            // Play movement sound
+            const hoverSound = document.getElementById('hoverSound');
+            if (hoverSound) {
+                hoverSound.currentTime = 0;
+                if (hoverSound.readyState >= 2) {
+                    hoverSound.volume = 0.5;
+                    hoverSound.play().catch(() => {});
+                } else {
+                    hoverSound.addEventListener('canplaythrough', function() {
+                        hoverSound.volume = 0.5;
+                        hoverSound.play().catch(() => {});
+                    }, { once: true });
+                    hoverSound.load();
+                }
+            }
+            
+            // Check if reached exit (check both cell value and coordinates)
+            const isAtExit = (playerX === exitX && playerY === exitY) || (maze[playerY] && maze[playerY][playerX] === 2);
+            
+            if (isAtExit && !gameComplete) {
+                gameComplete = true;
+                const code = generateCode();
+                window.minigameCode = code;
+                
+                console.log('Maze complete! Code:', code, 'Moves:', moves, 'Position:', playerX, playerY); // Debug
+                
+                if (minigameCode) {
+                    minigameCode.textContent = code;
+                }
+                if (minigameStatus) {
+                    minigameStatus.textContent = 'COMPLETE';
+                    minigameStatus.style.color = '#00ff00';
+                }
+                if (minigameResult) {
+                    minigameResult.classList.remove('hidden');
+                }
+                
+                // Play success sound
+                const powerSound = document.getElementById('powerSound');
+                if (powerSound) {
+                    powerSound.currentTime = 0;
+                    if (powerSound.readyState >= 2) {
+                        powerSound.play().catch(() => {});
+                    } else {
+                        powerSound.addEventListener('canplaythrough', function() {
+                            powerSound.play().catch(() => {});
+                        }, { once: true });
+                        powerSound.load();
+                    }
+                }
+                
+                // Redraw to show completion
+                setTimeout(() => {
+                    drawMaze();
+                }, 100);
+            }
+            
+            drawMaze();
+        }
+    }
+    
+    // Arrow key controls
+    const keys = {};
+    document.addEventListener('keydown', function(e) {
+        if (!minigameSection || minigameSection.classList.contains('hidden')) return;
+        
+        keys[e.key] = true;
+        
+        if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
+            e.preventDefault();
+            movePlayer(0, -1);
+        } else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') {
+            e.preventDefault();
+            movePlayer(0, 1);
+        } else if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+            e.preventDefault();
+            movePlayer(-1, 0);
+        } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+            e.preventDefault();
+            movePlayer(1, 0);
+        }
+    });
+    
+    document.addEventListener('keyup', function(e) {
+        keys[e.key] = false;
+    });
+    
+    // Continue button - show access point
+    if (minigameContinueBtn) {
+        minigameContinueBtn.addEventListener('click', () => {
+            if (minigameSection) {
+                minigameSection.classList.add('hidden');
+            }
+            if (hiddenSecretAccessSection) {
+                hiddenSecretAccessSection.classList.remove('hidden');
+            }
+        });
+    }
+    
+    // Initialize
+    drawMaze();
+    if (minigameMoves) {
+        minigameMoves.textContent = '0';
+    }
+    if (minigameStatus) {
+        minigameStatus.textContent = 'NAVIGATING';
+        minigameStatus.style.color = '#00ffff';
+    }
+}
+
+// Hidden Secret Monologue System
+document.addEventListener('DOMContentLoaded', function() {
+    const hiddenSecretAccessButton = document.getElementById('hiddenSecretAccessButton');
+    const hiddenSecretCodeInput = document.getElementById('hiddenSecretCodeInput');
+    const hiddenSecretError = document.getElementById('hiddenSecretError');
+    const hiddenSecretScreen = document.getElementById('hiddenSecretScreen');
+    const hiddenSecretBlackScreen = document.getElementById('hiddenSecretBlackScreen');
+    const hiddenSecretTextContainer = document.getElementById('hiddenSecretTextContainer');
+    const HIDDEN_SECRET_CODE = 'MORE'; // Code based on the hint "Keep Looking" -> "MORE"
+    
+    // Disable random glitches and alerts during sequence
+    window.hiddenSecretActive = false;
+    
+    const hiddenSecretText = [
+        'have you ever wondered what the human soul desires most?',
+        '',
+        'peace of mind?',
+        '',
+        'subconsciously all humans wish to remove all their fears',
+        '',
+        'they seek fame',
+        '',
+        'money',
+        '',
+        'dominance',
+        '',
+        'all to obtain a sense of everlasting security',
+        '',
+        'You waste your time',
+        '',
+        'Yet...',
+        '',
+        'There is still',
+        '',
+        'More',
+        '',
+        'To',
+        '',
+        'See',
+        '',
+        'Keep Looking',
+        '',
+        'The map has the answers'
+    ];
+    
+    function checkHiddenSecretCode() {
+        if (!hiddenSecretCodeInput) return;
+        
+        const enteredCode = hiddenSecretCodeInput.value.trim().toUpperCase();
+        const correctCode = window.minigameCode || 'MORE'; // Fallback to 'MORE' if code not set
+        
+        if (enteredCode === correctCode) {
+            // Correct code - start sequence
+            if (hiddenSecretError) {
+                hiddenSecretError.textContent = '';
+                hiddenSecretError.classList.remove('show');
+            }
+            if (hiddenSecretCodeInput) {
+                hiddenSecretCodeInput.value = '';
+            }
+            
+            // Disable random glitches and alerts
+            window.hiddenSecretActive = true;
+            
+            // Start the sequence
+            startHiddenSecretSequence();
+        } else if (enteredCode) {
+            // Wrong code
+            if (hiddenSecretError) {
+                hiddenSecretError.textContent = 'INVALID SEQUENCE';
+                hiddenSecretError.classList.add('show');
+            }
+            if (hiddenSecretCodeInput) {
+                hiddenSecretCodeInput.value = '';
+            }
+        }
+    }
+    
+    function startHiddenSecretSequence() {
+        // Stop background music
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        if (backgroundMusic) {
+            backgroundMusic.pause();
+            backgroundMusic.currentTime = 0;
+        }
+        
+        // Phase 1: Uncontrollable glitch for 3 seconds with crash sound
+        const crashSound = document.getElementById('crashSound');
+        if (crashSound) {
+            crashSound.volume = 0.9;
+            crashSound.loop = true;
+            crashSound.currentTime = 0;
+            if (crashSound.readyState >= 2) {
+                crashSound.play().catch(() => {});
+            } else {
+                crashSound.addEventListener('canplaythrough', function() {
+                    crashSound.play().catch(() => {});
+                }, { once: true });
+                crashSound.load();
+            }
+        }
+        
+        const glitchInterval = setInterval(() => {
+            document.body.classList.add('glitch-extreme');
+            setTimeout(() => {
+                document.body.classList.remove('glitch-extreme');
+            }, 100);
+        }, 50);
+        
+        setTimeout(() => {
+            clearInterval(glitchInterval);
+            
+            // Stop crash sound
+            if (crashSound) {
+                crashSound.pause();
+                crashSound.currentTime = 0;
+            }
+            
+            // Phase 2: Show black screen
+            if (hiddenSecretScreen) {
+                hiddenSecretScreen.classList.remove('hidden');
+            }
+            if (hiddenSecretBlackScreen) {
+                hiddenSecretBlackScreen.classList.remove('hidden');
+            }
+            
+            // Play power sound
+            const powerSound = document.getElementById('powerSound');
+            if (powerSound) {
+                powerSound.volume = 0.8;
+                powerSound.currentTime = 0;
+                if (powerSound.readyState >= 2) {
+                    powerSound.play().catch(() => {});
+                } else {
+                    powerSound.addEventListener('canplaythrough', function() {
+                        powerSound.play().catch(() => {});
+                    }, { once: true });
+                    powerSound.load();
+                }
+            }
+            
+            // Start gaster sound a bit later (3 seconds after black screen)
+            setTimeout(() => {
+                const gasterSound = document.getElementById('gasterSound');
+                if (gasterSound) {
+                    gasterSound.loop = false;
+                    gasterSound.volume = 0;
+                    gasterSound.currentTime = 0;
+                    
+                    const playGaster = () => {
+                        gasterSound.play().catch(() => {});
+                        
+                        // Fade in gaster sound over 8 seconds
+                        const fadeInterval = setInterval(() => {
+                            if (gasterSound.volume < 0.2) {
+                                gasterSound.volume += 0.005;
+                            } else {
+                                clearInterval(fadeInterval);
+                            }
+                        }, 100);
+                    };
+                    
+                    if (gasterSound.readyState >= 2) {
+                        playGaster();
+                    } else {
+                        gasterSound.addEventListener('canplaythrough', playGaster, { once: true });
+                        gasterSound.load();
+                    }
+                    
+                    window.hiddenSecretGasterSound = gasterSound;
+                }
+            }, 3000);
+            
+            // Phase 3: Wait 7 seconds, then start text
+            setTimeout(() => {
+                // Start text sequence
+                let textIndex = 0;
+                
+                function showNextText() {
+                    if (textIndex >= hiddenSecretText.length) {
+                        // All text shown, wait 7 seconds then final glitch and return to main
+                        setTimeout(() => {
+                            // Stop gaster sound
+                            const gasterSound = window.hiddenSecretGasterSound;
+                            if (gasterSound) {
+                                const stopGasterInterval = setInterval(() => {
+                                    if (gasterSound.volume > 0) {
+                                        gasterSound.volume -= 0.1;
+                                    } else {
+                                        gasterSound.pause();
+                                        clearInterval(stopGasterInterval);
+                                    }
+                                }, 100);
+                            }
+                            
+                            // Final uncontrollable glitch
+                            const finalGlitchInterval = setInterval(() => {
+                                document.body.classList.add('glitch-extreme');
+                                setTimeout(() => {
+                                    document.body.classList.remove('glitch-extreme');
+                                }, 100);
+                            }, 50);
+                            
+                            // Play crash sound
+                            const finalCrashSound = document.getElementById('crashSound');
+                            if (finalCrashSound) {
+                                finalCrashSound.volume = 0.9;
+                                finalCrashSound.currentTime = 0;
+                                if (finalCrashSound.readyState >= 2) {
+                                    finalCrashSound.play().catch(() => {});
+                                } else {
+                                    finalCrashSound.addEventListener('canplaythrough', function() {
+                                        finalCrashSound.play().catch(() => {});
+                                    }, { once: true });
+                                    finalCrashSound.load();
+                                }
+                            }
+                            
+                            // After 5 seconds, return to main page with glitch
+                            setTimeout(() => {
+                                clearInterval(finalGlitchInterval);
+                                
+                                // Stop crash sound
+                                if (finalCrashSound) {
+                                    finalCrashSound.pause();
+                                    finalCrashSound.currentTime = 0;
+                                }
+                                
+                                // Hide sequence screens
+                                if (hiddenSecretScreen) {
+                                    hiddenSecretScreen.classList.add('hidden');
+                                }
+                                if (hiddenSecretBlackScreen) {
+                                    hiddenSecretBlackScreen.classList.add('hidden');
+                                }
+                                if (hiddenSecretTextContainer) {
+                                    hiddenSecretTextContainer.innerHTML = '';
+                                }
+                                
+                                // Re-enable random glitches
+                                window.hiddenSecretActive = false;
+                                
+                                // Final glitch effect before reloading
+                                document.body.classList.add('glitch-extreme');
+                                setTimeout(() => {
+                                    document.body.classList.remove('glitch-extreme');
+                                    
+                                    // Reload the page
+                                    window.location.reload();
+                                }, 1000);
+                            }, 5000);
+                        }, 7000);
+                        return;
+                    }
+                    
+                    const text = hiddenSecretText[textIndex];
+                    if (hiddenSecretTextContainer) {
+                        hiddenSecretTextContainer.innerHTML = '';
+                        const textElement = document.createElement('div');
+                        textElement.className = 'project01-text-line';
+                        textElement.textContent = '';
+                        hiddenSecretTextContainer.appendChild(textElement);
+                        
+                        // Type out text character by character
+                        let charIndex = 0;
+                        const textSound = document.getElementById('textSound');
+                        let textSoundPlaying = false;
+                        let soundResetTimeout = null;
+                        
+                        if (textSound) {
+                            textSound.volume = 0.7;
+                        }
+                        
+                        function typeNextChar() {
+                            if (charIndex < text.length) {
+                                textElement.textContent += text[charIndex];
+                                charIndex++;
+                                
+                                // Play text sound only while typing
+                                if (textSound && charIndex % 3 === 0 && !textSoundPlaying) {
+                                    textSound.currentTime = 0;
+                                    if (textSound.readyState >= 2) {
+                                        textSound.play().catch(() => {});
+                                    } else {
+                                        textSound.addEventListener('canplaythrough', function() {
+                                            textSound.play().catch(() => {});
+                                        }, { once: true });
+                                        textSound.load();
+                                    }
+                                    textSoundPlaying = true;
+                                    // Clear any existing timeout
+                                    if (soundResetTimeout) {
+                                        clearTimeout(soundResetTimeout);
+                                    }
+                                    // Reset flag after sound duration so it can play again
+                                    soundResetTimeout = setTimeout(() => {
+                                        textSoundPlaying = false;
+                                        soundResetTimeout = null;
+                                    }, 150);
+                                }
+                                
+                                setTimeout(typeNextChar, 80);
+                            } else {
+                                // Text complete, stop text sound immediately
+                                if (soundResetTimeout) {
+                                    clearTimeout(soundResetTimeout);
+                                    soundResetTimeout = null;
+                                }
+                                if (textSound) {
+                                    textSound.pause();
+                                    textSound.currentTime = 0;
+                                }
+                                textSoundPlaying = false;
+                                
+                                // Wait 1 second before next (no sound during pause)
+                                textIndex++;
+                                setTimeout(showNextText, 1000);
+                            }
+                        }
+                        
+                        typeNextChar();
+                    }
+                }
+                
+                showNextText();
+            }, 7000);
+        }, 3000);
+    }
+    
+    if (hiddenSecretAccessButton) {
+        hiddenSecretAccessButton.addEventListener('click', checkHiddenSecretCode);
+    }
+    
+    if (hiddenSecretCodeInput) {
+        hiddenSecretCodeInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkHiddenSecretCode();
+            }
+        });
+    }
 });
 

@@ -3496,6 +3496,203 @@ body.glitch-extreme::after {
     background: #ff3333;
 }
 
+/* Public Files Section */
+.public-files-section {
+    margin-top: 20px;
+}
+
+.file-item.public-file {
+    border-left-color: #00ff00;
+    box-shadow: 
+        0 0 15px rgba(0, 255, 0, 0.3),
+        inset 0 0 10px rgba(0, 255, 0, 0.05);
+}
+
+.file-item.public-file:hover {
+    border-color: #00ff00;
+    box-shadow: 
+        0 0 25px rgba(0, 255, 0, 0.5),
+        inset 0 0 15px rgba(0, 255, 0, 0.1);
+}
+
+.file-status.public {
+    color: #00ff00;
+    text-shadow: 0 0 5px #00ff00;
+}
+
+/* Announcements Section */
+.announcements-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.announcement-item {
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid #333;
+    border-left: 4px solid #00ff00;
+    padding: 20px;
+    transition: all 0.3s;
+}
+
+.announcement-item:hover {
+    border-left-color: #00ff00;
+    border-left-width: 6px;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+}
+
+.announcement-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #333;
+}
+
+.announcement-date {
+    color: #888;
+    font-size: 12px;
+    font-family: 'Courier Prime', monospace;
+}
+
+.announcement-priority {
+    padding: 4px 12px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Courier Prime', monospace;
+}
+
+.announcement-priority.high {
+    background: rgba(255, 0, 0, 0.2);
+    color: #ff0000;
+    border: 1px solid #ff0000;
+}
+
+.announcement-priority.medium {
+    background: rgba(255, 170, 0, 0.2);
+    color: #ffaa00;
+    border: 1px solid #ffaa00;
+}
+
+.announcement-priority.low {
+    background: rgba(0, 255, 0, 0.2);
+    color: #00ff00;
+    border: 1px solid #00ff00;
+}
+
+.announcement-title {
+    color: #00ff00;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-family: 'Orbitron', monospace;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.announcement-content {
+    color: #ccc;
+    font-size: 13px;
+    line-height: 1.6;
+    font-family: 'Courier Prime', monospace;
+}
+
+/* Resource Dashboard */
+.resource-dashboard {
+    margin-top: 20px;
+}
+
+.resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.resource-item {
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid #333;
+    border-left: 4px solid #00ff00;
+    padding: 20px;
+    transition: all 0.3s;
+}
+
+.resource-item:hover {
+    border-left-width: 6px;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+}
+
+.resource-label {
+    color: #00ff00;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-family: 'Orbitron', monospace;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.resource-bar {
+    width: 100%;
+    height: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #333;
+    margin-bottom: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.resource-fill {
+    height: 100%;
+    transition: width 0.5s ease;
+    position: relative;
+}
+
+.water-fill {
+    background: linear-gradient(90deg, #0066ff, #00aaff);
+    box-shadow: 0 0 10px rgba(0, 102, 255, 0.5);
+}
+
+.power-fill {
+    background: linear-gradient(90deg, #ffaa00, #ffcc00);
+    box-shadow: 0 0 10px rgba(255, 170, 0, 0.5);
+}
+
+.food-fill {
+    background: linear-gradient(90deg, #00ff00, #66ff66);
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+}
+
+.medical-fill {
+    background: linear-gradient(90deg, #ff0000, #ff6666);
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+.resource-value {
+    color: #00ff00;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-family: 'Courier Prime', monospace;
+}
+
+.resource-status {
+    color: #888;
+    font-size: 12px;
+    font-family: 'Courier Prime', monospace;
+    text-transform: uppercase;
+}
+
+.resource-note {
+    text-align: center;
+    margin-top: 15px;
+}
+
 .viewer-body {
     padding: 20px 25px;
     overflow-y: auto;
@@ -5587,6 +5784,28 @@ body.glitch-extreme::after {
     color: #00ff00;
 }
 
+.activity-detail-jittery {
+    animation: activityJitter 0.1s infinite;
+    color: #00ffff !important;
+    text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
+    font-weight: bold;
+}
+
+@keyframes activityJitter {
+    0%, 100% {
+        transform: translate(0, 0);
+    }
+    25% {
+        transform: translate(-1px, 1px);
+    }
+    50% {
+        transform: translate(1px, -1px);
+    }
+    75% {
+        transform: translate(-1px, -1px);
+    }
+}
+
 .activity-status {
     min-width: 80px;
     text-align: right;
@@ -5828,5 +6047,78 @@ body.glitch-extreme::after {
         filter: brightness(0.9) contrast(1.5) hue-rotate(-30deg);
         transform: translate(0.5px, -0.5px);
     }
+}
+
+/* Cursor Pulse Animation for Hidden Puzzle */
+@keyframes cursorPulse {
+    0%, 100% {
+        opacity: 1;
+        text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.7;
+        text-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff, 0 0 60px #00ffff;
+        transform: scale(1.1);
+    }
+}
+
+/* Minigame Styles */
+.minigame-container {
+    margin-top: 20px;
+}
+
+.minigame-header {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #00ffff;
+}
+
+.minigame-info {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    flex-wrap: wrap;
+    font-family: 'Courier Prime', monospace;
+    font-size: 14px;
+    color: #00ffff;
+    text-shadow: 0 0 5px #00ffff;
+}
+
+.minigame-info span {
+    padding: 8px 15px;
+    background: rgba(0, 255, 255, 0.1);
+    border: 1px solid #00ffff;
+    border-radius: 3px;
+}
+
+.minigame-instructions {
+    margin-bottom: 30px;
+}
+
+.minigame-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 300px;
+    margin: 0 auto;
+    justify-items: center;
+}
+
+.minigame-button {
+    transition: all 0.2s !important;
+}
+
+.minigame-button:active {
+    transform: scale(0.95) !important;
+}
+
+.minigame-status {
+    min-height: 50px;
+    margin-top: 20px;
+}
+
+.minigame-result {
+    text-align: center;
 }
 
