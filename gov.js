@@ -1,31 +1,89 @@
-// Audio Preloading System
+// Audio Preloading System - Track loading state
+let allResourcesLoaded = false;
+let audioLoadPromises = [];
+
 document.addEventListener('DOMContentLoaded', function() {
     // Preload all audio elements to ensure they're ready
     const audioElements = [
         'glitchSound', 'typingSound', 'backgroundMusic', 'alarmSound',
-        'crashSound', 'powerSound', 'gasterSound', 'textSound'
+        'crashSound', 'powerSound', 'gasterSound', 'textSound', 'hoverSound'
     ];
     
     audioElements.forEach(audioId => {
         const audio = document.getElementById(audioId);
         if (audio) {
-            // Force load by setting volume (triggers loading)
-            audio.volume = audio.volume || 0.5;
-            // Load the audio
-            audio.load();
-            
-            // Handle loading errors
-            audio.addEventListener('error', function() {
-                console.warn(`Failed to load audio: ${audioId}`);
+            // Create a promise for each audio file
+            const audioPromise = new Promise((resolve, reject) => {
+                // Force load by setting volume (triggers loading)
+                audio.volume = audio.volume || 0.5;
+                
+                // Handle loading errors
+                audio.addEventListener('error', function() {
+                    console.warn(`Failed to load audio: ${audioId}`);
+                    resolve(); // Resolve anyway to not block loading
+                });
+                
+                // Check if already loaded
+                if (audio.readyState >= 4) {
+                    resolve();
+                } else {
+                    // Wait for canplaythrough event
+                    audio.addEventListener('canplaythrough', function() {
+                        resolve();
+                    }, { once: true });
+                    
+                    // Also check loadeddata as fallback
+                    audio.addEventListener('loadeddata', function() {
+                        resolve();
+                    }, { once: true });
+                    
+                    // Load the audio
+                    audio.load();
+                }
             });
             
-            // Ensure audio is ready
-            if (audio.readyState === 0) {
-                audio.addEventListener('canplaythrough', function() {
-                    // Audio is ready
+            audioLoadPromises.push(audioPromise);
+        }
+    });
+    
+    // Wait for all images to load
+    const imageLoadPromise = new Promise((resolve) => {
+        const images = document.querySelectorAll('img');
+        if (images.length === 0) {
+            resolve();
+            return;
+        }
+        
+        let loadedCount = 0;
+        const totalImages = images.length;
+        
+        images.forEach(img => {
+            if (img.complete) {
+                loadedCount++;
+                if (loadedCount === totalImages) {
+                    resolve();
+                }
+            } else {
+                img.addEventListener('load', function() {
+                    loadedCount++;
+                    if (loadedCount === totalImages) {
+                        resolve();
+                    }
+                }, { once: true });
+                img.addEventListener('error', function() {
+                    loadedCount++;
+                    if (loadedCount === totalImages) {
+                        resolve();
+                    }
                 }, { once: true });
             }
-        }
+        });
+    });
+    
+    // Wait for all resources to load
+    Promise.all([...audioLoadPromises, imageLoadPromise]).then(() => {
+        allResourcesLoaded = true;
+        console.log('All resources loaded');
     });
 });
 
@@ -247,8 +305,8 @@ document.addEventListener('DOMContentLoaded', function() {
         updateHackStats();
     }, 500);
     
-    // Hide hacking screen after sequence (extended time to match last step + fade time)
-    setTimeout(() => {
+    // Function to hide loading screen when ready
+    function hideLoadingScreen() {
         // Add hiding class for glitch transition
         hackingScreen.classList.add('hiding');
         
@@ -256,7 +314,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const glitchSound = document.getElementById('glitchSound');
         if (glitchSound) {
             glitchSound.currentTime = 0;
-            glitchSound.play().catch(e => console.log('Audio play failed:', e));
+            if (glitchSound.readyState >= 2) {
+                glitchSound.play().catch(e => console.log('Audio play failed:', e));
+            } else {
+                glitchSound.addEventListener('canplaythrough', function() {
+                    glitchSound.play().catch(e => console.log('Audio play failed:', e));
+                }, { once: true });
+            }
         }
         
         setTimeout(() => {
@@ -277,17 +341,67 @@ document.addEventListener('DOMContentLoaded', function() {
             const backgroundMusic = document.getElementById('backgroundMusic');
             if (backgroundMusic) {
                 backgroundMusic.volume = 0.3; // Set volume to 30%
-                backgroundMusic.play().catch(e => {
-                    console.log('Music play failed:', e);
-                    // Try again after user interaction
-                    document.addEventListener('click', function startMusic() {
-                        backgroundMusic.play().catch(err => console.log('Music play failed:', err));
-                        document.removeEventListener('click', startMusic);
+                if (backgroundMusic.readyState >= 2) {
+                    backgroundMusic.play().catch(e => {
+                        console.log('Music play failed:', e);
+                        // Try again after user interaction
+                        document.addEventListener('click', function startMusic() {
+                            backgroundMusic.play().catch(err => console.log('Music play failed:', err));
+                            document.removeEventListener('click', startMusic);
+                        }, { once: true });
+                    });
+                } else {
+                    backgroundMusic.addEventListener('canplaythrough', function() {
+                        backgroundMusic.play().catch(e => {
+                            console.log('Music play failed:', e);
+                            document.addEventListener('click', function startMusic() {
+                                backgroundMusic.play().catch(err => console.log('Music play failed:', err));
+                                document.removeEventListener('click', startMusic);
+                            }, { once: true });
+                        });
                     }, { once: true });
-                });
+                }
             }
         }, 800); // Wait for glitch animation to complete
+    }
+    
+    // Wait for both hack sequence to complete AND all resources to load
+    let hackSequenceComplete = false;
+    let resourcesReady = false;
+    
+    // Check if hack sequence is done
+    setTimeout(() => {
+        hackSequenceComplete = true;
+        if (resourcesReady) {
+            hideLoadingScreen();
+        }
     }, 14200); // Hide after hack sequence completes (13800 + buffer)
+    
+    // Check if resources are ready
+    function checkResourcesReady() {
+        if (allResourcesLoaded) {
+            resourcesReady = true;
+            if (hackSequenceComplete) {
+                hideLoadingScreen();
+            }
+        } else {
+            // Check again in 100ms
+            setTimeout(checkResourcesReady, 100);
+        }
+    }
+    
+    // Start checking after a short delay to allow initial loading
+    setTimeout(checkResourcesReady, 500);
+    
+    // Fallback timeout: hide loading screen after 30 seconds max, even if resources aren't fully loaded
+    setTimeout(() => {
+        if (!resourcesReady || !hackSequenceComplete) {
+            console.warn('Loading timeout reached, hiding loading screen anyway');
+            resourcesReady = true;
+            hackSequenceComplete = true;
+            hideLoadingScreen();
+        }
+    }, 30000);
     
     // Keep screen visible initially and prevent scrolling
     hackingScreen.classList.add('active');
